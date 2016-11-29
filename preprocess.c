@@ -79,7 +79,12 @@ int load_prefixes(char name[], Name_Prefix_P name_list[], int length[])
 	lp_line = 1;                      //³õÊ¼Îª1 
 	while(feof(lp_in) == 0)
 	{
+		memset(lp_temp,0,5000*sizeof(char));
 		fgets(lp_temp, 5000, lp_in);
+		
+//		if(lp_temp[0]==0 || lp_temp[0]=='\n')//bug bug bug ¶ÁÈë¿ÕĞĞµ¼ÖÂ´íÎó£¬ĞèÒªÌø¹ı¡£¿ÕĞĞ³öÏÖÔ­ÒòÉĞ²»Çå³ş 
+//			continue; 
+			
 		name_list[lp_line] = new Name_Prefix();
 // ************************************************************************
 // Ô¤´¦ÀíÃüÃûÇ°×º£¬´æ´¢ÍêÕûÃüÃûĞÅÏ¢£¬ÃüÃû×Ö¿éÊı£¬ÃüÃûÖ¸ÎÆ£¬ÃüÃûBFÖµ 
@@ -114,13 +119,16 @@ int process_middle_prefix(char input[], char output[])                   //¸ù¾İÃ
 	pm_in = fopen(input, "r");
 	pm_out = fopen(output, "w");
 	
+	memset(pm_write,0,500*sizeof(char));
 	
 	while(feof(pm_in) == 0)
 	{
 		pm_low = 1; 
 		pm_high = 32;
 		pm_len = 0;
-		fgets(pm_read, 500, pm_in);
+		fgets(pm_read, 500, pm_in);//ÕâÀïĞèÒªÈ¥µô¿Õ¸ñµÄ²Ù×÷£¬·ñÔòÃ¿Ò»¸ö¶ÁÈënameÔÙÉú³É±ê¼ÇÇ°×ººó£¬×îºóÒ»¸ö·ÅÈëpre.txtµÄÇ°×ºÄ©Î²»áÓĞÁ½¸ö\n\n£¬µ¼ÖÂºóÃæprefix load»áÔØÈëÒ»¸ö¿ÕĞĞ£¬½ø¶øÔÚ²éÑ¯µÄÊ±ºò»á¶Áµ½¿ÕÖ¸Õë£¨¿ÕĞĞ³¤¶ÈÎª0£¬»áÈ¥µ÷ÓÃht[0]£¬µ«ÊÇ´úÂëÖĞht[0]ÊÇÒç³öÍ°£¬Èç¹ûÃ»ÓĞ·¢ÉúÒç³ö£¬ÔòÒç³öÍ°ÊÇ¿ÕÖ¸Õë£¬»á³öÏÖ¶Î´íÎó£© 
+		pm_read[strlen(pm_read)-1]='\0';//È¥µô»»ĞĞ·û 
+		
 		pm_length = count_component(pm_read);//Í³¼Æµ±Ç°¶ÁÈëµÄname×Ö¿éÊı 
 	    while(pm_low <= pm_high)
 	    {
@@ -131,9 +139,13 @@ int process_middle_prefix(char input[], char output[])                   //¸ù¾İÃ
 	    	{
 	    		pm_len = cut_string(pm_read, pm_middle);
 	    		memcpy(pm_write, pm_read, pm_len);//½ØÈ¡µ±Ç°nameÇ°pm_middle¸ö×Ö¿é 
-	    		pm_write[pm_len] = '\0';//½ÓÉÏ½áÊø·û 
+//	    		pm_write[pm_len] = '\0';//½ÓÉÏ½áÊø·û 
 	    		//if(pm_length != pm_middle)                    //²»µÈÓÚÖ»Êä³öÖĞ¼ä½Úµã£¬ÆÁ±Î¸Ã¾ä£¬ÔòµÃµ½Ô­ÓĞ½Úµã¼ÓÖĞ¼ä½Úµã 
+	    		if(pm_write[0]!='\n' || pm_write[0]!=0)
 	    			fprintf(pm_out, "%s\n", pm_write);//Êä³öµ½outputÖ¸ÏòµÄÎÄ¼ş 
+//	    		printf("insert:%s\n",pm_write);
+//	    		getchar();
+	    		memset(pm_write,0,500*sizeof(char));
 	    		pm_low = pm_middle + 1;//ÒÆÏòÓÒ×ÓÇø¼ä 
 			}
 		}
@@ -143,20 +155,38 @@ int process_middle_prefix(char input[], char output[])                   //¸ù¾İÃ
 	return 0;
 }
 
-int cut_string(char name[], int n)			//¼ÇÂ¼Óöµ½µÚn¸ö·ûºÅ¡°/¡±Ê±µÄ×Ö·û´®³¤¶È 
+int cut_string(char name[], int n)			//¼ÇÂ¼Ç°n¸ö×é¼şµÄ³¤¶È,nameĞÎÊ½Îª/a/b/c/d...
 {							//²ÎÊıÇ°×ºcs_ 
 	char *cs_p;
 	cs_p = name;
 	int cs_number = 0;
 	int cs_length = 0;
 	while(*cs_p != NULL)
+//	while(*cs_p)
 	{
-		if(*cs_p == 47)
-			cs_number++;
+		if(*cs_p == 47)//·´Ğ±¸Ü'/' 
+		{
+			if(cs_number < n)
+				cs_number++;
+			else
+				break;
+		}
 		cs_p++;
 		cs_length++;
-		if(cs_number == n)
-			break;
+//		if(cs_number == n)
+//			break;
 	}
 	return cs_length;
+} 
+
+int clr_Name_Prefix(Name_Prefix_P item){
+	int i=0;
+	item->component=0;
+	item->fp=0;
+	for(i=0; i<1000; i++){
+		if(i<500){
+			item->name[i]=0;
+		}
+		item->bloom[i]=0;
+	}
 } 

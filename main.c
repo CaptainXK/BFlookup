@@ -3,23 +3,28 @@
 #include "order.h"
 #include "bloom_filter.h"
 #include "time.h"
-#include <stdlib.h>
-#include <string.h>
 
 Name_Prefix_P name_list[240000];
 int length[PP_MAX_NUMBER + 1] = {0};
 
-int main(int argc, char *argv[])//input parameters : initial rules_set file, preprocess rules file, test data file
+int main(int argc ,char *argv[])
 {
-	if(argc < 4){
-		printf("number of parameters error!\n");
+//	char name1[] = "rules_random_100000_0.txt";
+	// char name1[] = "names.txt"; 
+	 char name2[] = "pre.txt";
+	if(argc < 3){
+		printf("please input all data file needed\n");
 		exit(1);
 	}
 
+	char *name1 = argv[1];
+	// char *name2 = argv[2];
 	Hash_Table_P ht[PP_MAX_LENGTH + 1];
-	process_middle_prefix(argv[1], argv[2] );
-	int line = load_prefixes(argv[1] ,name_list ,length );
-	printf("done!\n");
+	process_middle_prefix(name1,name2);	
+	int line;
+	
+	line = load_prefixes(name2, name_list, length);
+	
 	for(int i = 1; i <= PP_MAX_LENGTH; i++)
 	{
 		if(length[i] != 0)
@@ -36,20 +41,28 @@ int main(int argc, char *argv[])//input parameters : initial rules_set file, pre
 	
 	int tp = hash_table_insert(ht, name_list, line, addition1, identity1); 
 	printf("%d\n",tp);	
-
+	
 	//hash lookup (without BF) test
-	FILE *test_in = fopen(argv[3],"r");
-	char ti_temp[5000]="";
+	FILE *test_in;
+	test_in = fopen("new_test_match.txt","r");
+	if(test_in == NULL){
+		printf("test_in file open error!\n");
+		exit(1);
+	}
+	// char ti_temp[5000]="";
+	char *ti_temp = argv[2];
 	int test_line=0;
-	Name_Prefix_P test_name;
+	Name_Prefix_P test_name = new Name_Prefix();
 	while(!feof(test_in)){
 		fgets(ti_temp,5000,test_in);
-		test_name = new Name_Prefix();
 		sscanf(ti_temp,"%s", test_name->name);//name initial		
 		test_name->component = count_component(test_name->name);//number of component initial
 		test_name->fp = murmurHash64B(test_name->name, strlen(test_name->name), 0xEE6B27EB);//footprint initial
-		hash_table_lookup(ht, test_name, identity1);
-		delete test_name;
+		hash_table_lookup(ht, test_name, identity1);\
+		clr_Name_Prefix(test_name);
 	}
+
+	fclose(test_in);
+
 	return 0;
 }

@@ -67,15 +67,16 @@ int hash_table_insert(Hash_Table_P ht[], Name_Prefix_P name_list[], int line, Ha
 	int hi_temp1, hi_temp2, hi_temp3;            //?洢???????׺????
 	int hi_overflow = 0;                         //??????????Ŀ 
 	int hi_number = 0;                           //?????????,????Ϊreturn?Ĳ?? 
-	// int hi_ht[line / 10] = {0};                  //???????????Ĺ?ϣ??
-	int *hi_ht = new int[line / 10];
 	int hi_addition = 0;                         //??????????? 
+	// int hi_ht[line / 10] = {0};                  //???????????Ĺ?ϣ??
+	int *hi_ht = new int[line/10];
+
 	for(int hi_temp = 0; hi_temp < line / 10; hi_temp++)
 		addition[hi_temp] = NULL;
 	for(int i = 0; i < line / 10;i ++)
 		for(int j = 0; j < PP_MAX_LENGTH + 1; j++ )
 			identity[i][j] = -1;
-	for(int hi_i = 1; hi_i <= line; hi_i++)
+	for(int hi_i = 1; hi_i < line; hi_i++)//bug bug bug hi_i==lineʱ??omponentΪ0,ht[0]?????????ȡ??????
 	{
 		hi_length = name_list[hi_i]->component;                                           //??ǰ׺????Ϊ???ȣ??????ϣ??? 
 		hi_bucket = (name_list[hi_i]->fp & 0xfffff) % ht[hi_length]->bucket_number;       //??ǰ׺ָ?ȡ??0λ???????ϣͰ?? 
@@ -295,14 +296,14 @@ int hash_table_lookup(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[]
 	hl_result = fopen("result.txt","a+");
 	if(hl_time != 0)
 	{
-		// printf("The lookup result is entry[%d] in bucket[%d] in hash table[%d]!\n", hl_entry, hl_bucket, hl_table);  
+//		printf("The lookup result is entry[%d] in bucket[%d] in hash table[%d]!\n", hl_entry, hl_bucket, hl_table);  
 		fprintf(hl_result, "name: %s, lookup time: %d, location ht[%d]->buckets[%d]->entry[%d]!\n", name_list->name, hl_number, hl_table, hl_bucket, hl_entry);
 		fclose(hl_result);
 		return 1;
 	}
 	else
 	{
-		// printf("The name %s lookup Failed!\n",name_list->name);
+//		printf("The name %s lookup Failed!\n",name_list->name);
 		fprintf(hl_result, "name: %s, lookup time: %d, match failed!\n", name_list->name, hl_number);
 		fclose(hl_result);
 		return -1;

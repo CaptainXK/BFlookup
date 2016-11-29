@@ -1,9 +1,10 @@
 #! /bin/bash
-if [ $# -lt 3 ]
+if [ $# -lt 2 ]
 then
 	echo "parameter number error!\n"
 	exit 1
 fi
-g++  -std=c++11 *.c -o test
+
+g++ *.c -o test -g3
 chmod 777 test
-./test $1 $2 $3
+./test $1 $2
