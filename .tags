@@ -1,0 +1,70 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	0	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+HASH_TABLE_H	/home/xk/project/BFlookup/hash_table.h	/^#define HASH_TABLE_H$/;"	macro	line:2
+HT_CACHE_LINE	/home/xk/project/BFlookup/hash_table.h	/^#define HT_CACHE_LINE /;"	macro	line:11
+HT_BUCKET_ENTRY_NUMBER	/home/xk/project/BFlookup/hash_table.h	/^#define HT_BUCKET_ENTRY_NUMBER /;"	macro	line:14
+Hash_Entry	/home/xk/project/BFlookup/hash_table.h	/^typedef struct Hash_Entry{                             \/\/��ϣ��Ŀ�ṹ$/;"	struct	line:17
+fp	/home/xk/project/BFlookup/hash_table.h	/^	uint64_t fp: 20;                                   \/\/20bit����ǰ׺��ָ����Ϣ$/;"	member	line:18	struct:Hash_Entry
+addr	/home/xk/project/BFlookup/hash_table.h	/^	uint64_t addr: 44;	                               \/\/44bit����ǰ׺�ĵ�ַ��Ϣ$/;"	member	line:19	struct:Hash_Entry
+Hash_Entry	/home/xk/project/BFlookup/hash_table.h	/^}Hash_Entry;$/;"	typedef	line:20	typeref:struct:Hash_Entry
+Hash_Entry_P	/home/xk/project/BFlookup/hash_table.h	/^typedef Hash_Entry *Hash_Entry_P;                      \/\/������ϣ��Ŀ�ṹ����ָ������$/;"	typedef	line:21
+Hash_Bucket	/home/xk/project/BFlookup/hash_table.h	/^typedef struct Hash_Bucket{                            \/\/��ϣͰ�ṹ$/;"	struct	line:23
+occupied	/home/xk/project/BFlookup/hash_table.h	/^	uint64_t occupied: 7;                              \/\/7bitռ��λ��1��ʾռ�ã�0��ʾΪ��$/;"	member	line:24	struct:Hash_Bucket
+collided	/home/xk/project/BFlookup/hash_table.h	/^	uint64_t collided: 7;					           \/\/7bit��ͻλ��1��ʾ�г�ͻ$/;"	member	line:25	struct:Hash_Bucket
+leaf	/home/xk/project/BFlookup/hash_table.h	/^	uint64_t leaf: 7;                                  \/\/7bitҶ��λ��1��ʾΪҶ��ǰ׺$/;"	member	line:26	struct:Hash_Bucket
+next	/home/xk/project/BFlookup/hash_table.h	/^	uint64_t next : 42;                                \/\/����һ��Ͱ�ľ���$/;"	member	line:27	struct:Hash_Bucket
+reserved	/home/xk/project/BFlookup/hash_table.h	/^	uint64_t reserved : 1;                             \/\/1bit��ʹ�õ�λ$/;"	member	line:28	struct:Hash_Bucket
+entry	/home/xk/project/BFlookup/hash_table.h	/^	Hash_Entry_P entry[HT_BUCKET_ENTRY_NUMBER];        \/\/��ϣͰ�洢��7����ϣ��Ŀ$/;"	member	line:29	struct:Hash_Bucket
+Hash_Bucket	/home/xk/project/BFlookup/hash_table.h	/^}__attribute__ ((aligned(HT_CACHE_LINE)))Hash_Bucket;  \/\/��64�ֽڵķ�ʽ���ڴ��ж��� 1*8+7*8$/;"	typedef	line:30	typeref:struct:Hash_Bucket
+Hash_Bucket_P	/home/xk/project/BFlookup/hash_table.h	/^typedef Hash_Bucket *Hash_Bucket_P;                    \/\/������ϣͰ�ṹ����ָ������$/;"	typedef	line:31
+Hash_Table	/home/xk/project/BFlookup/hash_table.h	/^typedef struct Hash_Table{                             \/\/��ϣ���ṹ$/;"	struct	line:33
+length	/home/xk/project/BFlookup/hash_table.h	/^  uint32_t length;                                     \/\/��ϣ���洢������ǰ׺����$/;"	member	line:34	struct:Hash_Table
+buckets	/home/xk/project/BFlookup/hash_table.h	/^  Hash_Bucket_P *buckets;                              \/\/��ϣ���洢�Ĺ�ϣͰ$/;"	member	line:35	struct:Hash_Table
+bloom	/home/xk/project/BFlookup/hash_table.h	/^  uint32_t *bloom;                                     \/\/��ϣ���е�BF$/;"	member	line:36	struct:Hash_Table
+bucket_number	/home/xk/project/BFlookup/hash_table.h	/^  int bucket_number;                                   \/\/Ͱ����Ŀ$/;"	member	line:37	struct:Hash_Table
+bf_number	/home/xk/project/BFlookup/hash_table.h	/^  int bf_number;                                       \/\/BF����Ŀ��һ��Ϊ32λ$/;"	member	line:38	struct:Hash_Table
+Hash_Table	/home/xk/project/BFlookup/hash_table.h	/^}Hash_Table;$/;"	typedef	line:39	typeref:struct:Hash_Table
+Hash_Table_P	/home/xk/project/BFlookup/hash_table.h	/^typedef Hash_Table *Hash_Table_P;                      \/\/������ϣ���ṹ����ָ������$/;"	typedef	line:40
+count_component	/home/xk/project/BFlookup/preprocess.c	/^int count_component(char name[])			\/\/��¼���š�\/�����ֵĴ�����Ҳ���Է�����������ǰ׺�ĳ���cc_length$/;"	function	line:3	signature:(char name[])
+murmurHash64B	/home/xk/project/BFlookup/preprocess.c	/^uint64_t murmurHash64B (const void * key, int len, uint32_t seed)             \/\/��Դ������http:\/\/blog.csdn.net\/wisage\/article\/details\/7104866$/;"	function	line:21	signature:(const void * key, int len, uint32_t seed)
+load_prefixes	/home/xk/project/BFlookup/preprocess.c	/^int load_prefixes(char name[], Name_Prefix_P name_list[], int length[])$/;"	function	line:72	signature:(char name[], Name_Prefix_P name_list[], int length[])
+process_middle_prefix	/home/xk/project/BFlookup/preprocess.c	/^int process_middle_prefix(char input[], char output[])                   \/\/��������ǰ׺���ڶ��ֲ��ҵ��м��ڵ����ɶ�Ӧ���ȵ�����ǰ׺ $/;"	function	line:112	signature:(char input[], char output[])
+cut_string	/home/xk/project/BFlookup/preprocess.c	/^int cut_string(char name[], int n)			\/\/��¼ǰn�������ĳ���,name��ʽΪ\/a\/b\/c\/d...$/;"	function	line:158	signature:(char name[], int n)
+clr_Name_Prefix	/home/xk/project/BFlookup/preprocess.c	/^int clr_Name_Prefix(Name_Prefix_P item){$/;"	function	line:182	signature:(Name_Prefix_P item)
+ORDER_H	/home/xk/project/BFlookup/order.h	/^#define ORDER_H$/;"	macro	line:2
+hash_bucket_init	/home/xk/project/BFlookup/hash_table.c	/^int hash_bucket_init(Hash_Bucket_P &hb)$/;"	function	line:6	signature:(Hash_Bucket_P &hb)
+hash_table_init	/home/xk/project/BFlookup/hash_table.c	/^int hash_table_init(Hash_Table_P &ht, int length, int bucket_number)$/;"	function	line:22	signature:(Hash_Table_P &ht, int length, int bucket_number)
+hash_table_withBF_init	/home/xk/project/BFlookup/hash_table.c	/^int hash_table_withBF_init(Hash_Table_P &ht, int length, int bucket_number, int bf_number)$/;"	function	line:40	signature:(Hash_Table_P &ht, int length, int bucket_number, int bf_number)
+hash_table_insert	/home/xk/project/BFlookup/hash_table.c	/^int hash_table_insert(Hash_Table_P ht[], Name_Prefix_P name_list[], int line, Hash_Bucket_P addition[], int identity[][PP_MAX_LENGTH + 1])$/;"	function	line:64	signature:(Hash_Table_P ht[], Name_Prefix_P name_list[], int line, Hash_Bucket_P addition[], int identity[][PP_MAX_LENGTH + 1])
+hash_table_lookup	/home/xk/project/BFlookup/hash_table.c	/^int hash_table_lookup(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1])$/;"	function	line:213	signature:(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1])
+hash_table_delete	/home/xk/project/BFlookup/hash_table.c	/^int hash_table_delete(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1])$/;"	function	line:313	signature:(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1])
+hash_table_output	/home/xk/project/BFlookup/hash_table.c	/^int hash_table_output(Hash_Table_P ht)$/;"	function	line:361	signature:(Hash_Table_P ht)
+write_ht_information	/home/xk/project/BFlookup/hash_table.c	/^int write_ht_information(char name[], Hash_Table_P ht[], Hash_Bucket_P addition[])$/;"	function	line:378	signature:(char name[], Hash_Table_P ht[], Hash_Bucket_P addition[])
+PREPROCESS_H	/home/xk/project/BFlookup/preprocess.h	/^#define PREPROCESS_H$/;"	macro	line:2
+PP_FILE_NAME	/home/xk/project/BFlookup/preprocess.h	/^#define PP_FILE_NAME /;"	macro	line:9
+PP_MAX_NUMBER	/home/xk/project/BFlookup/preprocess.h	/^#define PP_MAX_NUMBER /;"	macro	line:10
+PP_MAX_LENGTH	/home/xk/project/BFlookup/preprocess.h	/^#define PP_MAX_LENGTH /;"	macro	line:11
+Name_Prefix	/home/xk/project/BFlookup/preprocess.h	/^typedef struct Name_Prefix{                   \/\/����ǰ׺�洢��Ϣ $/;"	struct	line:13
+name	/home/xk/project/BFlookup/preprocess.h	/^  char name[500];                             \/\/����������Ϣ $/;"	member	line:14	struct:Name_Prefix
+fp	/home/xk/project/BFlookup/preprocess.h	/^  uint64_t fp;                                \/\/������Ӧ��ָ����Ϣ $/;"	member	line:15	struct:Name_Prefix
+component	/home/xk/project/BFlookup/preprocess.h	/^  int component;                              \/\/�����ֿ���$/;"	member	line:16	struct:Name_Prefix
+bloom	/home/xk/project/BFlookup/preprocess.h	/^  uint32_t bloom[1000];                       \/\/������Ӧ��³ķֵ ,32000bits $/;"	member	line:17	struct:Name_Prefix
+Name_Prefix	/home/xk/project/BFlookup/preprocess.h	/^}Name_Prefix;$/;"	typedef	line:18	typeref:struct:Name_Prefix
+Name_Prefix_P	/home/xk/project/BFlookup/preprocess.h	/^typedef Name_Prefix *Name_Prefix_P;           \/\/����ǰ׺��ָ������ $/;"	typedef	line:19
+hash_table_lookup_order	/home/xk/project/BFlookup/order.c	/^int hash_table_lookup_order(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1])$/;"	function	line:3	signature:(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1])
+BLOOM_FILTER_H	/home/xk/project/BFlookup/bloom_filter.h	/^#define BLOOM_FILTER_H$/;"	macro	line:2
+BLOOM_SIZE	/home/xk/project/BFlookup/bloom_filter.h	/^#define BLOOM_SIZE /;"	macro	line:13
+HASH_TIME	/home/xk/project/BFlookup/bloom_filter.h	/^#define HASH_TIME /;"	macro	line:14
+BF_DEEP	/home/xk/project/BFlookup/bloom_filter.h	/^#define BF_DEEP /;"	macro	line:15
+calculate_Bloom_Filter	/home/xk/project/BFlookup/bloom_filter.c	/^int calculate_Bloom_Filter(Hash_Table_P ht[], Name_Prefix_P name_list)$/;"	function	line:3	signature:(Hash_Table_P ht[], Name_Prefix_P name_list)
+calculate_Bloom_Loc	/home/xk/project/BFlookup/bloom_filter.c	/^int calculate_Bloom_Loc(Hash_Table_P ht[], Name_Prefix_P name_list, uint64_t loc[])$/;"	function	line:21	signature:(Hash_Table_P ht[], Name_Prefix_P name_list, uint64_t loc[])
+merge_Bloom_Filter	/home/xk/project/BFlookup/bloom_filter.c	/^int merge_Bloom_Filter(Hash_Table_P ht[], Name_Prefix_P name_list[], int line)$/;"	function	line:31	signature:(Hash_Table_P ht[], Name_Prefix_P name_list[], int line)
+lookup_Bloom_Filter	/home/xk/project/BFlookup/bloom_filter.c	/^int lookup_Bloom_Filter(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1])$/;"	function	line:47	signature:(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1])
+BFlookup	/home/xk/project/BFlookup/README.md	/^# BFlookup$/;"	function	line:1
+name_list	/home/xk/project/BFlookup/main.c	/^Name_Prefix_P name_list[240000];$/;"	variable	line:7
+length	/home/xk/project/BFlookup/main.c	/^int length[PP_MAX_NUMBER + 1] = {0};$/;"	variable	line:8
+main	/home/xk/project/BFlookup/main.c	/^int main(int argc ,char *argv[])$/;"	function	line:9	signature:(int argc ,char *argv[])

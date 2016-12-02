@@ -1,4 +1,5 @@
 #! /bin/bash
+#input initial-rules-data-set and test-data-set
 if [ $# -lt 2 ]
 then
 	echo "parameter number error!\n"

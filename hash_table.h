@@ -2,51 +2,51 @@
 #define HASH_TABLE_H
 
 #include "stdio.h"
-#include "stdlib.h" 
+#include "stdlib.h"
 #include "string.h"
 #include "inttypes.h"
 
 #include "preprocess.h"
 
-#define HT_CACHE_LINE 64                               //»º´æ×Ö½ÚÊý 
-//#define HT_COMPONETS 32                                //ÃüÃûÇ°×ºµÄ×î´ó×Ö¶ÎÊý 
-//#define HT_LENGTH 10                                   //ÃüÃûÇ°×º×Ö¶ÎÖÐµÄ×î³¤×Ö·ûÊý 
-#define HT_BUCKET_ENTRY_NUMBER 7                       //1¸ö¹þÏ£Í°×î¶à°üº¬7¸öÌõÄ¿  
-//#define HT_BUCKET_NUMBER 900//300                    //¶þ·Ö·¨×î´óµÄ¹þÏ£±íÐèÒª900¸öÍ°£¬Ë³Ðò·¨ÐèÒª300¸ö£¬Í³Ò»¶¨ÒåÐèÒª¸Ã²ÎÊý 
+#define HT_CACHE_LINE 64                               //ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½
+//#define HT_COMPONETS 32                                //ï¿½ï¿½ï¿½ï¿½Ç°×ºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¶ï¿½ï¿½ï¿½
+//#define HT_LENGTH 10                                   //ï¿½ï¿½ï¿½ï¿½Ç°×ºï¿½Ö¶ï¿½ï¿½Ðµï¿½ï¿½î³¤ï¿½Ö·ï¿½ï¿½ï¿½
+#define HT_BUCKET_ENTRY_NUMBER 7                       //1ï¿½ï¿½ï¿½ï¿½Ï£Í°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½7ï¿½ï¿½ï¿½ï¿½Ä¿
+//#define HT_BUCKET_NUMBER 900//300                    //ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¹ï¿½Ï£ï¿½ï¿½ï¿½ï¿½Òª900ï¿½ï¿½Í°ï¿½ï¿½Ë³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òª300ï¿½ï¿½ï¿½ï¿½Í³Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½Ã²ï¿½ï¿½ï¿½
 
-typedef struct Hash_Entry{                             //¹þÏ£ÌõÄ¿½á¹¹ 
-	uint64_t fp: 20;                                   //20bitÃüÃûÇ°×ºµÄÖ¸ÎÆÐÅÏ¢  
-	uint64_t addr: 44;	                               //44bitÃüÃûÇ°×ºµÄµØÖ·ÐÅÏ¢  
+typedef struct Hash_Entry{                             //ï¿½ï¿½Ï£ï¿½ï¿½Ä¿ï¿½á¹¹
+	uint64_t fp: 20;                                   //20bitï¿½ï¿½ï¿½ï¿½Ç°×ºï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½Ï¢
+	uint64_t addr: 44;	                               //44bitï¿½ï¿½ï¿½ï¿½Ç°×ºï¿½Äµï¿½Ö·ï¿½ï¿½Ï¢
 }Hash_Entry;
-typedef Hash_Entry *Hash_Entry_P;                      //¶¨Òå¹þÏ£ÌõÄ¿½á¹¹ÌåµÄÖ¸ÕëÀàÐÍ 
+typedef Hash_Entry *Hash_Entry_P;                      //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï£ï¿½ï¿½Ä¿ï¿½á¹¹ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-typedef struct Hash_Bucket{                            //¹þÏ£Í°½á¹¹ 
-	uint64_t occupied: 7;                              //7bitÕ¼ÓÃÎ»£¬1±íÊ¾Õ¼ÓÃ£¬0±íÊ¾Îª¿Õ 
-	uint64_t collided: 7;					           //7bit³åÍ»Î»£¬1±íÊ¾ÓÐ³åÍ» 
-	uint64_t leaf: 7;                                  //7bitÒ¶×ÓÎ»£¬1±íÊ¾ÎªÒ¶×ÓÇ°×º 
-	uint64_t next : 42;                                //ÀëÏÂÒ»¸öÍ°µÄ¾àÀë 
-	uint64_t reserved : 1;                             //1bit²»Ê¹ÓÃµÄÎ» 
-	Hash_Entry_P entry[HT_BUCKET_ENTRY_NUMBER];        //¹þÏ£Í°´æ´¢µÄ7¸ö¹þÏ£ÌõÄ¿ 
-}__attribute__ ((aligned(HT_CACHE_LINE)))Hash_Bucket;  //ÒÔ64×Ö½ÚµÄ·½Ê½ÔÚÄÚ´æÖÐ¶ÔÆä 1*8+7*8
-typedef Hash_Bucket *Hash_Bucket_P;                    //¶¨Òå¹þÏ£Í°½á¹¹ÌåµÄÖ¸ÕëÀàÐÍ 
+typedef struct Hash_Bucket{                            //ï¿½ï¿½Ï£Í°ï¿½á¹¹
+	uint64_t occupied: 7;                              //7bitÕ¼ï¿½ï¿½Î»ï¿½ï¿½1ï¿½ï¿½Ê¾Õ¼ï¿½Ã£ï¿½0ï¿½ï¿½Ê¾Îªï¿½ï¿½
+	uint64_t collided: 7;					           //7bitï¿½ï¿½Í»Î»ï¿½ï¿½1ï¿½ï¿½Ê¾ï¿½Ð³ï¿½Í»
+	uint64_t leaf: 7;                                  //7bitÒ¶ï¿½ï¿½Î»ï¿½ï¿½1ï¿½ï¿½Ê¾ÎªÒ¶ï¿½ï¿½Ç°×º
+	uint64_t next : 42;                                //ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Í°ï¿½Ä¾ï¿½ï¿½ï¿½
+	uint64_t reserved : 1;                             //1bitï¿½ï¿½Ê¹ï¿½Ãµï¿½Î»
+	Hash_Entry_P entry[HT_BUCKET_ENTRY_NUMBER];        //ï¿½ï¿½Ï£Í°ï¿½æ´¢ï¿½ï¿½7ï¿½ï¿½ï¿½ï¿½Ï£ï¿½ï¿½Ä¿
+}__attribute__ ((aligned(HT_CACHE_LINE)))Hash_Bucket;  //ï¿½ï¿½64ï¿½Ö½ÚµÄ·ï¿½Ê½ï¿½ï¿½ï¿½Ú´ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ 1*8+7*8
+typedef Hash_Bucket *Hash_Bucket_P;                    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï£Í°ï¿½á¹¹ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-typedef struct Hash_Table{                             //¹þÏ£±í½á¹¹ 
-  uint32_t length;                                     //¹þÏ£±í´æ´¢µÄÃüÃûÇ°×º³¤¶È 
-  Hash_Bucket_P *buckets;                              //¹þÏ£±í´æ´¢µÄ¹þÏ£Í°      
-  uint32_t *bloom;                                     //¹þÏ£±íÖÐµÄBF       
-  int bucket_number;                                   //Í°µÄÊýÄ¿ 
-  int bf_number;                                       //BFµÄÊýÄ¿£¬Ò»¸öÎª32Î» 
+typedef struct Hash_Table{                             //ï¿½ï¿½Ï£ï¿½ï¿½ï¿½á¹¹
+  uint32_t length;                                     //ï¿½ï¿½Ï£ï¿½ï¿½ï¿½æ´¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°×ºï¿½ï¿½ï¿½ï¿½
+  Hash_Bucket_P *buckets;                              //ï¿½ï¿½Ï£ï¿½ï¿½ï¿½æ´¢ï¿½Ä¹ï¿½Ï£Í°
+  uint32_t *bloom;                                     //ï¿½ï¿½Ï£ï¿½ï¿½ï¿½Ðµï¿½BF
+  int bucket_number;                                   //Í°ï¿½ï¿½ï¿½ï¿½Ä¿
+  int bf_number;                                       //BFï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½Ò»ï¿½ï¿½Îª32Î»
 }Hash_Table;
-typedef Hash_Table *Hash_Table_P;                      //¶¨Òå¹þÏ£±í½á¹¹ÌåµÄÖ¸ÕëÀàÐÍ 
+typedef Hash_Table *Hash_Table_P;                      //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï£ï¿½ï¿½ï¿½á¹¹ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 
-int hash_bucket_init(Hash_Bucket_P &hb);                                                    //¹þÏ£Í°³õÊ¼»¯ 
-int hash_table_init(Hash_Table_P &ht, int length, int bucket_numer);                        //¹þÏ£±í³õÊ¼»¯
-int hash_table_withBF_init(Hash_Table_P &ht, int length, int bucket_numer, int bf_number);  //´øÓÐBFµÄ¹þÏ£±í³õÊ¼»¯ 
-int hash_table_insert(Hash_Table_P ht[], Name_Prefix_P name_list[], int line, Hash_Bucket_P addition[], int identity[][PP_MAX_LENGTH + 1]);  //¹þÏ£±í²åÈë 
-int hash_table_lookup(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1]);      //¹þÏ£±í²éÕÒ
-int hash_table_delete(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1]);      //¹þÏ£±íÉ¾³ý
-int hash_table_output(Hash_Table_P ht);                                                     //¹þÏ£±íÊä³ö
-int write_ht_information(char name[], Hash_Table_P ht[], Hash_Bucket_P addition[]);         //½«¹þÏ£±íµÄÏà¹ØÐÅÏ¢Ð´ÈëÎÄ¼þÖÐ  
+int hash_bucket_init(Hash_Bucket_P &hb);                                                    //ï¿½ï¿½Ï£Í°ï¿½ï¿½Ê¼ï¿½ï¿½
+int hash_table_init(Hash_Table_P &ht, int length, int bucket_numer);                        //ï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½
+int hash_table_withBF_init(Hash_Table_P &ht, int length, int bucket_numer, int bf_number);  //ï¿½ï¿½ï¿½ï¿½BFï¿½Ä¹ï¿½Ï£ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½
+int hash_table_insert(Hash_Table_P ht[], Name_Prefix_P name_list[], int line, Hash_Bucket_P addition[], int identity[][PP_MAX_LENGTH + 1]);  //ï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+int hash_table_lookup(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1]);      //ï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+int hash_table_delete(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1]);      //ï¿½ï¿½Ï£ï¿½ï¿½É¾ï¿½ï¿½
+int hash_table_output(Hash_Table_P ht);                                                     //ï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+int write_ht_information(char name[], Hash_Table_P ht[], Hash_Bucket_P addition[]);         //ï¿½ï¿½ï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢Ð´ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
 
 #endif

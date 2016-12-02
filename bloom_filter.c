@@ -1,13 +1,13 @@
 #include "bloom_filter.h"
 
 int calculate_Bloom_Filter(Hash_Table_P ht[], Name_Prefix_P name_list)
-{					//²ÎÊýÇ°×ºcb_ 
+{					//ï¿½ï¿½ï¿½ï¿½Ç°×ºcb_
 	//uint64_t bloom[BLOOM_SIZE];
 	//for(int i = 0; i < BLOOM_SIZE; i++)
 	//	bloom[i] = 0;
 	uint64_t cb_hash[HASH_TIME];
 	const uint32_t cb_seed[3] = {0x5F5E0F5, 0x3D14D13, 0x18EE243};
-	for(int cb_j = 0; cb_j < HASH_TIME; cb_j++) 
+	for(int cb_j = 0; cb_j < HASH_TIME; cb_j++)
 	{
 		cb_hash[cb_j] = murmurHash64B(name_list->name, strlen(name_list->name), cb_seed[cb_j]) % (32 * ht[name_list->component]->bf_number);
 		int cb_m = cb_hash[cb_j] / 32;
@@ -15,21 +15,21 @@ int calculate_Bloom_Filter(Hash_Table_P ht[], Name_Prefix_P name_list)
 	//	printf("hash[%d] = %u, m = %d, n = %d\n", j, hash[j], m, n);
 		name_list->bloom[cb_m] = name_list->bloom[cb_m] | (1 << cb_n);
 	}
-	return 0; 
+	return 0;
 }
 
 int calculate_Bloom_Loc(Hash_Table_P ht[], Name_Prefix_P name_list, uint64_t loc[])
-{					//²ÎÊýÇ°×ºcb_ 
+{					//ï¿½ï¿½ï¿½ï¿½Ç°×ºcb_
 	const uint32_t cb_seed[3] = {0x5F5E0F5, 0x3D14D13, 0x18EE243};
-	for(int cb_j = 0; cb_j < HASH_TIME; cb_j++) 
+	for(int cb_j = 0; cb_j < HASH_TIME; cb_j++)
 	{
 		loc[cb_j] = murmurHash64B(name_list->name, strlen(name_list->name), cb_seed[cb_j]) % (32 * ht[name_list->component]->bf_number);
 	}
-	return 0; 
+	return 0;
 }
 
 int merge_Bloom_Filter(Hash_Table_P ht[], Name_Prefix_P name_list[], int line)
-{					//²ÎÊýÇ°×ºmb_ 
+{					//ï¿½ï¿½ï¿½ï¿½Ç°×ºmb_
 	for(int mb_i = 1; mb_i <= line; mb_i++)
 	{
 		for(int mb_j = 0; mb_j < ht[name_list[mb_i]->component]->bf_number; mb_j++)
@@ -45,13 +45,13 @@ int merge_Bloom_Filter(Hash_Table_P ht[], Name_Prefix_P name_list[], int line)
 }
 
 int lookup_Bloom_Filter(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1])
-{					//²ÎÊýÇ°×ºlb_ 
+{					//ï¿½ï¿½ï¿½ï¿½Ç°×ºlb_
 	int lb_low, lb_high, lb_middle, lb_length, lb_len, lb_flag, lb_back, lb_real, lb_bf, lb_time, lb_temp;
 	int lb_left[BF_DEEP] = {0};
 	int lb_right[BF_DEEP] = {0};
 	lb_low = 1;
 	lb_high = 32;
-	lb_length = name_list->component; 
+	lb_length = name_list->component;
 	//printf("length = %d\n", length);
 	int lb_entry = 0;
 	int lb_bucket = 0;
@@ -59,34 +59,34 @@ int lookup_Bloom_Filter(Hash_Table_P ht[], Name_Prefix_P name_list, int identity
 	lb_real = 0;
 	lb_back = 0;
 	uint64_t loc[HASH_TIME];
-	
+
     while(lb_low <= lb_high)
-	{   
-		lb_middle = (lb_low + lb_high) / 2;	
+    {
+		lb_middle = (lb_low + lb_high) / 2;
 		//printf("middle = %d\n",lb_middle);
 		if(ht[lb_middle] == NULL)
 		{
 			lb_high = lb_middle - 1;
 			continue;
 		}
-		if(lb_length < lb_middle)	
+		if(lb_length < lb_middle)
 		{
 			lb_high = lb_middle - 1;
-			if((lb_low > lb_high) && (lb_back == 0) && (lb_real > 0))    //¶þ·Ö½áÊøÒ»½×¶Îºó£¬¹þÏ£²éÕÒÊ§°Ü£¬µ«Ôø¾­³öÏÖ¹ýBF²éÕÒ³É¹¦ 
+			if((lb_low > lb_high) && (lb_back == 0) && (lb_real > 0))    //ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½Ò»ï¿½×¶Îºó£¬¹ï¿½Ï£ï¿½ï¿½ï¿½ï¿½Ê§ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¹ï¿½BFï¿½ï¿½ï¿½Ò³É¹ï¿½
 			{
 				lb_low = lb_left[lb_real];
 				lb_high = lb_right[lb_real];
 				lb_real--;
 			}
 		}
-			
+
 		else
-		{			
+		{
 			lb_flag = 0;
 			lb_bf = 0;
-			
-// ************************************************************************ 
-// ²úÉú¶ÔÓ¦³¤¶ÈµÄÃüÃûÇ°×º 
+
+// ************************************************************************
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½Èµï¿½ï¿½ï¿½ï¿½ï¿½Ç°×º
 			Name_Prefix_P lb_tp = new Name_Prefix();
 			lb_tp->bloom[BLOOM_SIZE] = {0};
 		 	lb_len = cut_string(name_list->name, lb_middle);
@@ -96,21 +96,21 @@ int lookup_Bloom_Filter(Hash_Table_P ht[], Name_Prefix_P name_list, int identity
 			lb_tp->fp = murmurHash64B(lb_tp->name, strlen(lb_tp->name), 0xEE6B27EB) & 0xfffff;
 			if(ht[lb_middle]->bf_number != 0)
 			{
-//				calculate_Bloom_Filter(ht, lb_tp); //¼ÆËãÍêÕûµÄ²¼Â³Ä·¹ýÂËÆ÷			
-				
-				calculate_Bloom_Loc(ht, lb_tp, loc);//modify modify modify				
-			
-// ************************************************************************             
-			
-			
-// ************************************************************************ 
-// BF¹ýÂË 
-				lb_time = 0;                                                 //3´Î¹þÏ£¶¼Æ¥Åä£¬²¼Â³Ä·Æ¥Åä²Å³É¹¦ 
+//				calculate_Bloom_Filter(ht, lb_tp); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä²ï¿½Â³Ä·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+
+				calculate_Bloom_Loc(ht, lb_tp, loc);//modify modify modify
+
+// ************************************************************************
+
+
+// ************************************************************************
+// BFï¿½ï¿½ï¿½ï¿½
+				lb_time = 0;                                                 //3ï¿½Î¹ï¿½Ï£ï¿½ï¿½Æ¥ï¿½ä£¬ï¿½ï¿½Â³Ä·Æ¥ï¿½ï¿½ï¿½Å³É¹ï¿½
 				lb_temp = 0;
 	//*************************************************************************
-	//BF¹ýÂË original 
+	//BFï¿½ï¿½ï¿½ï¿½ original
 	//				for(int lb_i = 0; lb_i < ht[lb_middle]->bf_number; lb_i++)
-	//				{                                                            //3´ÎÆ¥Åä»áÖ»ÓÐ2¸öÖµÂð£¿ 
+	//				{                                                            //3ï¿½ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½2ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½
 	//					if(lb_tp->bloom[lb_i] !=0)
 	//					{
 	//						lb_temp++;
@@ -120,39 +120,39 @@ int lookup_Bloom_Filter(Hash_Table_P ht[], Name_Prefix_P name_list, int identity
 	//					if((lb_time != lb_temp) || (lb_time == HASH_TIME))
 	//						break;
 	//				}
-	//end ori
+	//end original
 	//*************************************************************************
 
 	//*************************************************************************
-	//modify modify modify BF¹ýÂË  
-					for(int lb_i = 0; lb_i < HASH_TIME; lb_i++)//Èý´Î¹þÏ£¶ÔÓ¦bloom¹ýÂËÆ÷Î»ÖÃ×÷±È½Ï 
+	//modify modify modify BFï¿½ï¿½ï¿½ï¿½
+					for(int lb_i = 0; lb_i < HASH_TIME; lb_i++)//ï¿½ï¿½ï¿½Î¹ï¿½Ï£ï¿½ï¿½Ó¦bloomï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½È½ï¿½
 					{
 						lb_temp++;
 						if( (((uint32_t)1<<(loc[lb_i]%32)) & ht[lb_middle]->bloom[loc[lb_i]/32]) != 0)
-						    lb_time++;						
+						    lb_time++;
 						if( (lb_time != lb_temp) || (lb_time == HASH_TIME) )
 							break;
 					}
 	//end modify
 	//*************************************************************************
-				if((lb_time == lb_temp) && (lb_time <= HASH_TIME))                                      //BFÆ¥Åä³É¹¦£¬¼ÌÐø¶þ·Ö²éÕÒ 
+				if((lb_time == lb_temp) && (lb_time <= HASH_TIME))                                      //BFÆ¥ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö²ï¿½ï¿½ï¿½
 				{
 					lb_real++;
 					lb_bf++;
-					if(lb_real < BF_DEEP) 
+					if(lb_real < BF_DEEP)
 					{
 						lb_left[lb_real] = lb_low;
 						lb_right[lb_real] = lb_middle - 1;
-					}	
+					}
 					else
-						lb_real--;	
+						lb_real--;
 					lb_low = lb_middle + 1;
 				}
 			}
-// **************************************************************************** 
+// ****************************************************************************
 
-// ************************************************************************ 
-// ¹þÏ£²éÕÒ 
+// ************************************************************************
+// ï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½
 			uint64_t lb_hash;
 			lb_hash = lb_tp->fp % ht[lb_middle]->bucket_number;
 			for(int lb_j = 0; lb_j < HT_BUCKET_ENTRY_NUMBER; lb_j++)
@@ -166,9 +166,9 @@ int lookup_Bloom_Filter(Hash_Table_P ht[], Name_Prefix_P name_list, int identity
 							lb_table = lb_middle;
 							lb_bucket = lb_hash;
 							lb_entry = lb_j;
-							lb_flag = 1; 
+							lb_flag = 1;
 							lb_back++;
-							lb_low = lb_middle + 1;                      
+							lb_low = lb_middle + 1;
 							break;
 						}
 					}
@@ -197,24 +197,24 @@ int lookup_Bloom_Filter(Hash_Table_P ht[], Name_Prefix_P name_list, int identity
 							}
 						}
 					}
-				} 
+				}
 			}
-			 
-// ************************************************************************	
+
+// ************************************************************************
 //			printf("flag = %d, bf = %d, real = %d\n", flag, bf, real);
-			
-// ************************************************************************		
-//BFÓë¹þÏ£²éÕÒ½á¹û
+
+// ************************************************************************
+//BFï¿½ï¿½ï¿½ï¿½Ï£ï¿½ï¿½ï¿½Ò½ï¿½ï¿½ï¿½
 			if((lb_flag !=0) && (lb_length == lb_middle))
 				break;
-			else if(lb_flag != 0)                                                            //¹þÏ£²éÕÒ³É¹¦ 
-				lb_low = lb_middle + 1; 
-			else if((lb_flag == 0) && (lb_bf != 0))                                        //¹þÏ£²éÕÒÊ§°Ü£¬BF²éÕÒ³É¹¦                       
+			else if(lb_flag != 0)                                                            //ï¿½ï¿½Ï£ï¿½ï¿½ï¿½Ò³É¹ï¿½
 				lb_low = lb_middle + 1;
-			else if((lb_flag == 0) && (lb_bf == 0))                                        //¹þÏ£²éÕÒÊ§°Ü, BF²éÕÒÊ§°Ü 
+			else if((lb_flag == 0) && (lb_bf != 0))                                        //ï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½Ê§ï¿½Ü£ï¿½BFï¿½ï¿½ï¿½Ò³É¹ï¿½
+				lb_low = lb_middle + 1;
+			else if((lb_flag == 0) && (lb_bf == 0))                                        //ï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½, BFï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½
 				lb_high = lb_middle - 1;
 
-			if((lb_low > lb_high) && (lb_back == 0) && (lb_real > 0))                           //¶þ·Ö½áÊøÒ»½×¶Îºó£¬¹þÏ£²éÕÒÊ§°Ü£¬µ«Ôø¾­³öÏÖ¹ýBF²éÕÒ³É¹¦ 
+			if((lb_low > lb_high) && (lb_back == 0) && (lb_real > 0))                           //ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½Ò»ï¿½×¶Îºó£¬¹ï¿½Ï£ï¿½ï¿½ï¿½ï¿½Ê§ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¹ï¿½BFï¿½ï¿½ï¿½Ò³É¹ï¿½
 			{
 				lb_low = lb_left[lb_real];
 				lb_high = lb_right[lb_real];
@@ -223,9 +223,9 @@ int lookup_Bloom_Filter(Hash_Table_P ht[], Name_Prefix_P name_list, int identity
 
 		}
 	}//while(low <= high)
-// ************************************************************************	
-	
-	if(lb_back != 0)		
+// ************************************************************************
+
+	if(lb_back != 0)
 	{
 //		printf("Lookup the name %s succeed, it is in hash[%d]->buckets[%d]->entry[%d]!\n", name_list->name, table, bucket, entry);
 		return 1;
@@ -234,5 +234,5 @@ int lookup_Bloom_Filter(Hash_Table_P ht[], Name_Prefix_P name_list, int identity
 	{
 //		printf("Lookup the name %s failed!\n", name_list->name);
 		return -1;
-	}		
+	}
 }

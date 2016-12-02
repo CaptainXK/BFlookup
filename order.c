@@ -1,7 +1,7 @@
 #include "order.h"
 
 int hash_table_lookup_order(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1])
-{						//参数前缀hlo_ 
+{						//???前缀hlo_
 	int hlo_length, hlo_flag, hlo_len;
 	int hlo_entry = 0;
 	int hlo_bucket = 0;
@@ -36,7 +36,7 @@ int hash_table_lookup_order(Hash_Table_P ht[], Name_Prefix_P name_list, int iden
 						break;
 					}
 				}
-			}	
+			}
 		}
 		if((hlo_flag == 0) && (ht[hlo_length]->buckets[hlo_hash]->collided == 1))
 		{
@@ -53,7 +53,7 @@ int hash_table_lookup_order(Hash_Table_P ht[], Name_Prefix_P name_list, int iden
 								hlo_table = 0;
 								hlo_bucket = identity[hlo_hash][hlo_hash];
 								hlo_entry = hlo_i;
-								hlo_flag = 1;				
+								hlo_flag = 1;
 								break;
 							}
 						}
@@ -62,13 +62,13 @@ int hash_table_lookup_order(Hash_Table_P ht[], Name_Prefix_P name_list, int iden
 			}
 		}
 		if(hlo_flag == 1)
-			break;		
+			break;
 	}
 //	FILE *hlo_result;
 //	hlo_result = fopen("result.txt","a+");
 	if(hlo_flag == 1)
 	{
-		//printf("The lookup result is entry[%d] in bucket[%d] in hash table[%d]!\n", hlo_entry, hlo_bucket, hlo_table);  
+		//printf("The lookup result is entry[%d] in bucket[%d] in hash table[%d]!\n", hlo_entry, hlo_bucket, hlo_table);
 //		fprintf(hlo_result, "The %d name is lookuped %d times, and match the prefix successful!\n", hlo_i, hlo_number);
 //		fclose(hlo_result);
 		return 1;
@@ -80,4 +80,4 @@ int hash_table_lookup_order(Hash_Table_P ht[], Name_Prefix_P name_list, int iden
 //		fclose(hlo_result);
 		return -1;
 	}
-}  
+}

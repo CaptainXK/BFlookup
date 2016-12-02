@@ -1,0 +1,105 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+BF_DEEP	bloom_filter.h	15;"	d
+BLOOM_FILTER_H	bloom_filter.h	2;"	d
+BLOOM_SIZE	bloom_filter.h	13;"	d
+HASH_TABLE_H	hash_table.h	2;"	d
+HASH_TIME	bloom_filter.h	14;"	d
+HT_BUCKET_ENTRY_NUMBER	hash_table.h	14;"	d
+HT_CACHE_LINE	hash_table.h	11;"	d
+Hash_Bucket	hash_table.h	/^typedef struct Hash_Bucket{                            \/\/ï¿½ï¿½Ï£Í°ï¿½á¹¹$/;"	s
+Hash_Bucket	hash_table.h	/^}__attribute__ ((aligned(HT_CACHE_LINE)))Hash_Bucket;  \/\/ï¿½ï¿½64ï¿½Ö½ÚµÄ·ï¿½Ê½ï¿½ï¿½ï¿½Ú´ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ 1*8+7*8$/;"	t	typeref:struct:Hash_Bucket
+Hash_Bucket::collided	hash_table.h	/^	uint64_t collided: 7;					           \/\/7bitï¿½ï¿½Í»Î»ï¿½ï¿½1ï¿½ï¿½Ê¾ï¿½Ð³ï¿½Í»$/;"	m	struct:Hash_Bucket	access:public
+Hash_Bucket::entry	hash_table.h	/^	Hash_Entry_P entry[HT_BUCKET_ENTRY_NUMBER];        \/\/ï¿½ï¿½Ï£Í°ï¿½æ´¢ï¿½ï¿½7ï¿½ï¿½ï¿½ï¿½Ï£ï¿½ï¿½Ä¿$/;"	m	struct:Hash_Bucket	access:public
+Hash_Bucket::leaf	hash_table.h	/^	uint64_t leaf: 7;                                  \/\/7bitÒ¶ï¿½ï¿½Î»ï¿½ï¿½1ï¿½ï¿½Ê¾ÎªÒ¶ï¿½ï¿½Ç°×º$/;"	m	struct:Hash_Bucket	access:public
+Hash_Bucket::next	hash_table.h	/^	uint64_t next : 42;                                \/\/ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Í°ï¿½Ä¾ï¿½ï¿½ï¿½$/;"	m	struct:Hash_Bucket	access:public
+Hash_Bucket::occupied	hash_table.h	/^	uint64_t occupied: 7;                              \/\/7bitÕ¼ï¿½ï¿½Î»ï¿½ï¿½1ï¿½ï¿½Ê¾Õ¼ï¿½Ã£ï¿½0ï¿½ï¿½Ê¾Îªï¿½ï¿½$/;"	m	struct:Hash_Bucket	access:public
+Hash_Bucket::reserved	hash_table.h	/^	uint64_t reserved : 1;                             \/\/1bitï¿½ï¿½Ê¹ï¿½Ãµï¿½Î»$/;"	m	struct:Hash_Bucket	access:public
+Hash_Bucket_P	hash_table.h	/^typedef Hash_Bucket *Hash_Bucket_P;                    \/\/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï£Í°ï¿½á¹¹ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½$/;"	t
+Hash_Entry	hash_table.h	/^typedef struct Hash_Entry{                             \/\/ï¿½ï¿½Ï£ï¿½ï¿½Ä¿ï¿½á¹¹$/;"	s
+Hash_Entry	hash_table.h	/^}Hash_Entry;$/;"	t	typeref:struct:Hash_Entry
+Hash_Entry::addr	hash_table.h	/^	uint64_t addr: 44;	                               \/\/44bitï¿½ï¿½ï¿½ï¿½Ç°×ºï¿½Äµï¿½Ö·ï¿½ï¿½Ï¢$/;"	m	struct:Hash_Entry	access:public
+Hash_Entry::fp	hash_table.h	/^	uint64_t fp: 20;                                   \/\/20bitï¿½ï¿½ï¿½ï¿½Ç°×ºï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½Ï¢$/;"	m	struct:Hash_Entry	access:public
+Hash_Entry_P	hash_table.h	/^typedef Hash_Entry *Hash_Entry_P;                      \/\/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï£ï¿½ï¿½Ä¿ï¿½á¹¹ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½$/;"	t
+Hash_Table	hash_table.h	/^typedef struct Hash_Table{                             \/\/ï¿½ï¿½Ï£ï¿½ï¿½ï¿½á¹¹$/;"	s
+Hash_Table	hash_table.h	/^}Hash_Table;$/;"	t	typeref:struct:Hash_Table
+Hash_Table::bf_number	hash_table.h	/^  int bf_number;                                       \/\/BFï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½Ò»ï¿½ï¿½Îª32Î»$/;"	m	struct:Hash_Table	access:public
+Hash_Table::bloom	hash_table.h	/^  uint32_t *bloom;                                     \/\/ï¿½ï¿½Ï£ï¿½ï¿½ï¿½Ðµï¿½BF$/;"	m	struct:Hash_Table	access:public
+Hash_Table::bucket_number	hash_table.h	/^  int bucket_number;                                   \/\/Í°ï¿½ï¿½ï¿½ï¿½Ä¿$/;"	m	struct:Hash_Table	access:public
+Hash_Table::buckets	hash_table.h	/^  Hash_Bucket_P *buckets;                              \/\/ï¿½ï¿½Ï£ï¿½ï¿½ï¿½æ´¢ï¿½Ä¹ï¿½Ï£Í°$/;"	m	struct:Hash_Table	access:public
+Hash_Table::length	hash_table.h	/^  uint32_t length;                                     \/\/ï¿½ï¿½Ï£ï¿½ï¿½ï¿½æ´¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°×ºï¿½ï¿½ï¿½ï¿½$/;"	m	struct:Hash_Table	access:public
+Hash_Table_P	hash_table.h	/^typedef Hash_Table *Hash_Table_P;                      \/\/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï£ï¿½ï¿½ï¿½á¹¹ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½$/;"	t
+Name_Prefix	preprocess.h	/^typedef struct Name_Prefix{                   \/\/ÃüÃûÇ°×º´æ´¢ÐÅÏ¢ $/;"	s
+Name_Prefix	preprocess.h	/^}Name_Prefix;$/;"	t	typeref:struct:Name_Prefix
+Name_Prefix::bloom	preprocess.h	/^  uint32_t bloom[1000];                       \/\/ÃüÃû¶ÔÓ¦²¼Â³Ä·Öµ ,32000bits $/;"	m	struct:Name_Prefix	access:public
+Name_Prefix::component	preprocess.h	/^  int component;                              \/\/ÃüÃû×Ö¿éÊý$/;"	m	struct:Name_Prefix	access:public
+Name_Prefix::fp	preprocess.h	/^  uint64_t fp;                                \/\/ÃüÃû¶ÔÓ¦µÄÖ¸ÎÆÐÅÏ¢ $/;"	m	struct:Name_Prefix	access:public
+Name_Prefix::name	preprocess.h	/^  char name[500];                             \/\/ÍêÕûÃüÃûÐÅÏ¢ $/;"	m	struct:Name_Prefix	access:public
+Name_Prefix_P	preprocess.h	/^typedef Name_Prefix *Name_Prefix_P;           \/\/ÃüÃûÇ°×ºµÄÖ¸ÕëÀàÐÍ $/;"	t
+ORDER_H	order.h	2;"	d
+PP_FILE_NAME	preprocess.h	9;"	d
+PP_MAX_LENGTH	preprocess.h	11;"	d
+PP_MAX_NUMBER	preprocess.h	10;"	d
+PREPROCESS_H	preprocess.h	2;"	d
+addr	hash_table.h	/^	uint64_t addr: 44;	                               \/\/44bitï¿½ï¿½ï¿½ï¿½Ç°×ºï¿½Äµï¿½Ö·ï¿½ï¿½Ï¢$/;"	m	struct:Hash_Entry	access:public
+bf_number	hash_table.h	/^  int bf_number;                                       \/\/BFï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½Ò»ï¿½ï¿½Îª32Î»$/;"	m	struct:Hash_Table	access:public
+bloom	hash_table.h	/^  uint32_t *bloom;                                     \/\/ï¿½ï¿½Ï£ï¿½ï¿½ï¿½Ðµï¿½BF$/;"	m	struct:Hash_Table	access:public
+bloom	preprocess.h	/^  uint32_t bloom[1000];                       \/\/ÃüÃû¶ÔÓ¦²¼Â³Ä·Öµ ,32000bits $/;"	m	struct:Name_Prefix	access:public
+bucket_number	hash_table.h	/^  int bucket_number;                                   \/\/Í°ï¿½ï¿½ï¿½ï¿½Ä¿$/;"	m	struct:Hash_Table	access:public
+buckets	hash_table.h	/^  Hash_Bucket_P *buckets;                              \/\/ï¿½ï¿½Ï£ï¿½ï¿½ï¿½æ´¢ï¿½Ä¹ï¿½Ï£Í°$/;"	m	struct:Hash_Table	access:public
+calculate_Bloom_Filter	bloom_filter.c	/^int calculate_Bloom_Filter(Hash_Table_P ht[], Name_Prefix_P name_list)$/;"	f	signature:(Hash_Table_P ht[], Name_Prefix_P name_list)
+calculate_Bloom_Filter	bloom_filter.h	/^int calculate_Bloom_Filter(Hash_Table_P ht[], Name_Prefix_P name_list);                                        \/\/¼ÆËãÃ¿¸öÃüÃûÇ°×ºµÄBFÖµ$/;"	p	signature:(Hash_Table_P ht[], Name_Prefix_P name_list)
+calculate_Bloom_Loc	bloom_filter.c	/^int calculate_Bloom_Loc(Hash_Table_P ht[], Name_Prefix_P name_list, uint64_t loc[])$/;"	f	signature:(Hash_Table_P ht[], Name_Prefix_P name_list, uint64_t loc[])
+calculate_Bloom_Loc	bloom_filter.h	/^int calculate_Bloom_Loc(Hash_Table_P ht[], Name_Prefix_P name_list, uint64_t loc[]);\/\/¼ÇÂ¼²¼Â³Ä·¹ýÂËÆ÷ÖÐ¹þÏ£È·¶¨µÄÎ»ÖÃ ·ÅÔÚloc[] $/;"	p	signature:(Hash_Table_P ht[], Name_Prefix_P name_list, uint64_t loc[])
+clr_Name_Prefix	preprocess.c	/^int clr_Name_Prefix(Name_Prefix_P item){$/;"	f	signature:(Name_Prefix_P item)
+clr_Name_Prefix	preprocess.h	/^int clr_Name_Prefix(Name_Prefix_P item);															\/\/Çå¿ÕÊäÈëµÄÇ°×ºÊµÌå                        $/;"	p	signature:(Name_Prefix_P item)
+collided	hash_table.h	/^	uint64_t collided: 7;					           \/\/7bitï¿½ï¿½Í»Î»ï¿½ï¿½1ï¿½ï¿½Ê¾ï¿½Ð³ï¿½Í»$/;"	m	struct:Hash_Bucket	access:public
+component	preprocess.h	/^  int component;                              \/\/ÃüÃû×Ö¿éÊý$/;"	m	struct:Name_Prefix	access:public
+count_component	preprocess.c	/^int count_component(char name[])			\/\/ï¿½ï¿½Â¼ï¿½ï¿½ï¿½Å¡ï¿½\/ï¿½ï¿½ï¿½ï¿½ï¿½ÖµÄ´ï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°×ºï¿½Ä³ï¿½ï¿½ï¿½cc_length$/;"	f	signature:(char name[])
+count_component	preprocess.h	/^int count_component(char name[]);                                                                   \/\/¸ù¾Ý·ûºÅ¡°\/¡±¼ÆËãÃüÃûÇ°×ºµÄ×Ö¿éÊý $/;"	p	signature:(char name[])
+cut_string	preprocess.c	/^int cut_string(char name[], int n)			\/\/ï¿½ï¿½Â¼Ç°nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½,nameï¿½ï¿½Ê½Îª\/a\/b\/c\/d...$/;"	f	signature:(char name[], int n)
+cut_string	preprocess.h	/^int cut_string(char name[], int n);                                                                 \/\/½ØÈ¡n¸ö×Ö¿éµÄ×Ö·û´®£¬ÓÃÓÚ¶þ·Ö·¨ºÍBFµÄ²éÕÒ  $/;"	p	signature:(char name[], int n)
+entry	hash_table.h	/^	Hash_Entry_P entry[HT_BUCKET_ENTRY_NUMBER];        \/\/ï¿½ï¿½Ï£Í°ï¿½æ´¢ï¿½ï¿½7ï¿½ï¿½ï¿½ï¿½Ï£ï¿½ï¿½Ä¿$/;"	m	struct:Hash_Bucket	access:public
+fp	hash_table.h	/^	uint64_t fp: 20;                                   \/\/20bitï¿½ï¿½ï¿½ï¿½Ç°×ºï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½Ï¢$/;"	m	struct:Hash_Entry	access:public
+fp	preprocess.h	/^  uint64_t fp;                                \/\/ÃüÃû¶ÔÓ¦µÄÖ¸ÎÆÐÅÏ¢ $/;"	m	struct:Name_Prefix	access:public
+hash_bucket_init	hash_table.c	/^int hash_bucket_init(Hash_Bucket_P &hb)$/;"	f	signature:(Hash_Bucket_P &hb)
+hash_bucket_init	hash_table.h	/^int hash_bucket_init(Hash_Bucket_P &hb);                                                    \/\/ï¿½ï¿½Ï£Í°ï¿½ï¿½Ê¼ï¿½ï¿½$/;"	p	signature:(Hash_Bucket_P &hb)
+hash_table_delete	hash_table.c	/^int hash_table_delete(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1])$/;"	f	signature:(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1])
+hash_table_delete	hash_table.h	/^int hash_table_delete(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1]);      \/\/ï¿½ï¿½Ï£ï¿½ï¿½É¾ï¿½ï¿½$/;"	p	signature:(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1])
+hash_table_init	hash_table.c	/^int hash_table_init(Hash_Table_P &ht, int length, int bucket_number)$/;"	f	signature:(Hash_Table_P &ht, int length, int bucket_number)
+hash_table_init	hash_table.h	/^int hash_table_init(Hash_Table_P &ht, int length, int bucket_numer);                        \/\/ï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½$/;"	p	signature:(Hash_Table_P &ht, int length, int bucket_numer)
+hash_table_insert	hash_table.c	/^int hash_table_insert(Hash_Table_P ht[], Name_Prefix_P name_list[], int line, Hash_Bucket_P addition[], int identity[][PP_MAX_LENGTH + 1])$/;"	f	signature:(Hash_Table_P ht[], Name_Prefix_P name_list[], int line, Hash_Bucket_P addition[], int identity[][PP_MAX_LENGTH + 1])
+hash_table_insert	hash_table.h	/^int hash_table_insert(Hash_Table_P ht[], Name_Prefix_P name_list[], int line, Hash_Bucket_P addition[], int identity[][PP_MAX_LENGTH + 1]);  \/\/ï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½$/;"	p	signature:(Hash_Table_P ht[], Name_Prefix_P name_list[], int line, Hash_Bucket_P addition[], int identity[][PP_MAX_LENGTH + 1])
+hash_table_lookup	hash_table.c	/^int hash_table_lookup(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1])$/;"	f	signature:(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1])
+hash_table_lookup	hash_table.h	/^int hash_table_lookup(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1]);      \/\/ï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½$/;"	p	signature:(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1])
+hash_table_lookup_order	order.c	/^int hash_table_lookup_order(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1])$/;"	f	signature:(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1])
+hash_table_lookup_order	order.h	/^int hash_table_lookup_order(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1]);     \/\/¹þÏ£±í²éÕÒ$/;"	p	signature:(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1])
+hash_table_output	hash_table.c	/^int hash_table_output(Hash_Table_P ht)$/;"	f	signature:(Hash_Table_P ht)
+hash_table_output	hash_table.h	/^int hash_table_output(Hash_Table_P ht);                                                     \/\/ï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½$/;"	p	signature:(Hash_Table_P ht)
+hash_table_withBF_init	hash_table.c	/^int hash_table_withBF_init(Hash_Table_P &ht, int length, int bucket_number, int bf_number)$/;"	f	signature:(Hash_Table_P &ht, int length, int bucket_number, int bf_number)
+hash_table_withBF_init	hash_table.h	/^int hash_table_withBF_init(Hash_Table_P &ht, int length, int bucket_numer, int bf_number);  \/\/ï¿½ï¿½ï¿½ï¿½BFï¿½Ä¹ï¿½Ï£ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½$/;"	p	signature:(Hash_Table_P &ht, int length, int bucket_numer, int bf_number)
+leaf	hash_table.h	/^	uint64_t leaf: 7;                                  \/\/7bitÒ¶ï¿½ï¿½Î»ï¿½ï¿½1ï¿½ï¿½Ê¾ÎªÒ¶ï¿½ï¿½Ç°×º$/;"	m	struct:Hash_Bucket	access:public
+length	hash_table.h	/^  uint32_t length;                                     \/\/ï¿½ï¿½Ï£ï¿½ï¿½ï¿½æ´¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°×ºï¿½ï¿½ï¿½ï¿½$/;"	m	struct:Hash_Table	access:public
+length	main.c	/^int length[PP_MAX_NUMBER + 1] = {0};$/;"	v
+load_prefixes	preprocess.c	/^int load_prefixes(char name[], Name_Prefix_P name_list[], int length[])$/;"	f	signature:(char name[], Name_Prefix_P name_list[], int length[])
+load_prefixes	preprocess.h	/^int load_prefixes(char name[], Name_Prefix_P name_list[], int length[]);                            \/\/¶ÁÈëÃüÃûÇ°×º,·µ»ØÎÄ¼þµÄÐÐÊý£¬ÆäÖÐlength´æ´¢Ã¿¸ö×Ö¿é³¤¶ÈµÄÃüÃûÊýÄ¿ $/;"	p	signature:(char name[], Name_Prefix_P name_list[], int length[])
+lookup_Bloom_Filter	bloom_filter.c	/^int lookup_Bloom_Filter(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1])$/;"	f	signature:(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1])
+lookup_Bloom_Filter	bloom_filter.h	/^int lookup_Bloom_Filter(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1]); \/\/²¼Â³Ä·¹ýÂËÆ÷²éÕÒ $/;"	p	signature:(Hash_Table_P ht[], Name_Prefix_P name_list, int identity[][PP_MAX_LENGTH + 1])
+main	main.c	/^int main(int argc ,char *argv[])$/;"	f	signature:(int argc ,char *argv[])
+merge_Bloom_Filter	bloom_filter.c	/^int merge_Bloom_Filter(Hash_Table_P ht[], Name_Prefix_P name_list[], int line)$/;"	f	signature:(Hash_Table_P ht[], Name_Prefix_P name_list[], int line)
+merge_Bloom_Filter	bloom_filter.h	/^int merge_Bloom_Filter(Hash_Table_P ht[], Name_Prefix_P name_list[], int line);                         \/\/½«²¼Â³Ä·ºÏ²¢µ½Ò»¸ö×îÖÕµÄ²¼Â³Ä·¹ýÂËÆ÷ÖÐ $/;"	p	signature:(Hash_Table_P ht[], Name_Prefix_P name_list[], int line)
+murmurHash64B	preprocess.c	/^uint64_t murmurHash64B (const void * key, int len, uint32_t seed)             \/\/ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½http:\/\/blog.csdn.net\/wisage\/article\/details\/7104866$/;"	f	signature:(const void * key, int len, uint32_t seed)
+murmurHash64B	preprocess.h	/^uint64_t murmurHash64B (const void * key, int len, uint32_t seed);                                  \/\/ÍøÉÏÖ±½ÓÕÒµÄMurmur¹þÏ£ $/;"	p	signature:(const void * key, int len, uint32_t seed)
+name	preprocess.h	/^  char name[500];                             \/\/ÍêÕûÃüÃûÐÅÏ¢ $/;"	m	struct:Name_Prefix	access:public
+name_list	main.c	/^Name_Prefix_P name_list[240000];$/;"	v
+next	hash_table.h	/^	uint64_t next : 42;                                \/\/ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Í°ï¿½Ä¾ï¿½ï¿½ï¿½$/;"	m	struct:Hash_Bucket	access:public
+occupied	hash_table.h	/^	uint64_t occupied: 7;                              \/\/7bitÕ¼ï¿½ï¿½Î»ï¿½ï¿½1ï¿½ï¿½Ê¾Õ¼ï¿½Ã£ï¿½0ï¿½ï¿½Ê¾Îªï¿½ï¿½$/;"	m	struct:Hash_Bucket	access:public
+process_middle_prefix	preprocess.c	/^int process_middle_prefix(char input[], char output[])                   \/\/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°×ºï¿½ï¿½ï¿½Ú¶ï¿½ï¿½Ö²ï¿½ï¿½Òµï¿½ï¿½Ð¼ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½É¶ï¿½Ó¦ï¿½ï¿½ï¿½Èµï¿½ï¿½ï¿½ï¿½ï¿½Ç°×º $/;"	f	signature:(char input[], char output[])
+process_middle_prefix	preprocess.h	/^int process_middle_prefix(char input[], char output[]);                                             \/\/²úÉúÐéÄâµÄÖÐ¼äÃüÃû $/;"	p	signature:(char input[], char output[])
+reserved	hash_table.h	/^	uint64_t reserved : 1;                             \/\/1bitï¿½ï¿½Ê¹ï¿½Ãµï¿½Î»$/;"	m	struct:Hash_Bucket	access:public
+write_ht_information	hash_table.c	/^int write_ht_information(char name[], Hash_Table_P ht[], Hash_Bucket_P addition[])$/;"	f	signature:(char name[], Hash_Table_P ht[], Hash_Bucket_P addition[])
+write_ht_information	hash_table.h	/^int write_ht_information(char name[], Hash_Table_P ht[], Hash_Bucket_P addition[]);         \/\/ï¿½ï¿½ï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢Ð´ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½$/;"	p	signature:(char name[], Hash_Table_P ht[], Hash_Bucket_P addition[])

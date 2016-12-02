@@ -6,23 +6,23 @@
 #include "string.h"
 #include "inttypes.h"
 
-#define PP_FILE_NAME 60                       //×î³¤µÄÎÄ¼şÃû³Æ£¬°üº¬.txt 
-#define PP_MAX_NUMBER 300000                   //ÃüÃûÇ°×ºÊıÄ¿µÄ×î´óÖµ 
-#define PP_MAX_LENGTH 32                      //×Ö¿éÊıµÄ×î´óÖµ 
+#define PP_FILE_NAME 60                       //?????Ä¼???Æ£?????.txt 
+#define PP_MAX_NUMBER 300000                   //??Ç°×º?Ä¿???Öµ 
+#define PP_MAX_LENGTH 32                      //???????Öµ 
 
-typedef struct Name_Prefix{                   //ÃüÃûÇ°×º´æ´¢ĞÅÏ¢ 
-  char name[500];                             //ÍêÕûÃüÃûĞÅÏ¢ 
-  uint64_t fp;                                //ÃüÃû¶ÔÓ¦µÄÖ¸ÎÆĞÅÏ¢ 
-  int component;                              //ÃüÃû×Ö¿éÊı
-  uint32_t bloom[1000];                       //ÃüÃû¶ÔÓ¦²¼Â³Ä·Öµ ,32000bits 
+typedef struct Name_Prefix{                   //??Ç°×º?æ´¢?Ï¢ 
+  char name[500];                             //?????Ï¢ 
+  uint64_t fp;                                //??????????Ï¢ 
+  int component;                              //??????
+  uint32_t bloom[1000];                       //???????Â³Ä·Öµ ,32000bits 
 }Name_Prefix;
-typedef Name_Prefix *Name_Prefix_P;           //ÃüÃûÇ°×ºµÄÖ¸ÕëÀàĞÍ 
+typedef Name_Prefix *Name_Prefix_P;           //??Ç°×º???????
 
-int count_component(char name[]);                                                                   //¸ù¾İ·ûºÅ¡°/¡±¼ÆËãÃüÃûÇ°×ºµÄ×Ö¿éÊı 
-int load_prefixes(char name[], Name_Prefix_P name_list[], int length[]);                            //¶ÁÈëÃüÃûÇ°×º,·µ»ØÎÄ¼şµÄĞĞÊı£¬ÆäÖĞlength´æ´¢Ã¿¸ö×Ö¿é³¤¶ÈµÄÃüÃûÊıÄ¿ 
-int process_middle_prefix(char input[], char output[]);                                             //²úÉúĞéÄâµÄÖĞ¼äÃüÃû 
-uint64_t murmurHash64B (const void * key, int len, uint32_t seed);                                  //ÍøÉÏÖ±½ÓÕÒµÄMurmur¹şÏ£ 
-int cut_string(char name[], int n);                                                                 //½ØÈ¡n¸ö×Ö¿éµÄ×Ö·û´®£¬ÓÃÓÚ¶ş·Ö·¨ºÍBFµÄ²éÕÒ  
-int clr_Name_Prefix(Name_Prefix_P item);															//Çå¿ÕÊäÈëµÄÇ°×ºÊµÌå                        
+int count_component(char name[]);                                                                   //???İ·??Å¡?/???????Ç°×º??Ö¿?? 
+int load_prefixes(char name[], Name_Prefix_P name_list[], int length[], int number);                            //?????Ç°×º,????Ä¼?????????length?æ´¢Ã¿????é³¤?Èµ????Ä¿ 
+int process_middle_prefix(char input[], char output[]);                                             //???????Ğ¼??? 
+uint64_t murmurHash64B (const void * key, int len, uint32_t seed);                                  //??Ö±??Òµ?urmur??Ï£ 
+int cut_string(char name[], int n);                                                                 //???n?????????????????Ö·???F?Ä²?? 
+int clr_Name_Prefix(Name_Prefix_P item);															//?????Ç°×ºÊµ?                        
 
 #endif

@@ -1,7 +1,7 @@
 #include "preprocess.h"
 
-int count_component(char name[])			//¼ÇÂ¼·ûºÅ¡°/¡±³öÏÖµÄ´ÎÊý£¬Ò²¿ÉÒÔ·µ»ØÕû¸öÃüÃûÇ°×ºµÄ³¤¶Ècc_length 
-{                   //²ÎÊýÇ°×ºÎªcc_ 
+int count_component(char name[])			//ï¿½ï¿½Â¼ï¿½ï¿½ï¿½Å¡ï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½ÖµÄ´ï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°×ºï¿½Ä³ï¿½ï¿½ï¿½cc_length
+{                   //ï¿½ï¿½ï¿½ï¿½Ç°×ºÎªcc_
 	char *cc_p,*cc_q;
 	cc_p = name;
 	int cc_component = 0;
@@ -16,31 +16,31 @@ int count_component(char name[])			//¼ÇÂ¼·ûºÅ¡°/¡±³öÏÖµÄ´ÎÊý£¬Ò²¿ÉÒÔ·µ»ØÕû¸öÃüÃû
 		cc_p++;
 	}
 	return cc_component;
-} 
+}
 
-uint64_t murmurHash64B (const void * key, int len, uint32_t seed)             //À´Ô´ÓÚÍøÉÏhttp://blog.csdn.net/wisage/article/details/7104866
+uint64_t murmurHash64B (const void * key, int len, uint32_t seed)             //ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½http://blog.csdn.net/wisage/article/details/7104866
 {
 	const uint32_t m = 0x5bd1e995;
 	const int r = 24;
- 
+
 	uint32_t h1 = seed ^ len;
 	uint32_t h2 = 0;
- 
+
 	const uint32_t * data = (const uint32_t *)key;
- 
+
 	while(len >= 8)
 	{
 		uint32_t k1 = *data++;
 		k1 *= m; k1 ^= k1 >> r; k1 *= m;
 		h1 *= m; h1 ^= k1;
 		len -= 4;
- 
+
 		uint32_t k2 = *data++;
 		k2 *= m; k2 ^= k2 >> r; k2 *= m;
 		h2 *= m; h2 ^= k2;
 		len -= 4;
 	}
- 
+
 	if(len >= 4)
 	{
 		uint32_t k1 = *data++;
@@ -48,7 +48,7 @@ uint64_t murmurHash64B (const void * key, int len, uint32_t seed)             //
 		h1 *= m; h1 ^= k1;
 		len -= 4;
 	}
- 
+
 	switch(len)
 	{
 	case 3: h2 ^= ((unsigned char*)data)[2] << 16;
@@ -56,107 +56,112 @@ uint64_t murmurHash64B (const void * key, int len, uint32_t seed)             //
 	case 1: h2 ^= ((unsigned char*)data)[0];
 			h2 *= m;
 	};
- 
+
 	h1 ^= h2 >> 18; h1 *= m;
 	h2 ^= h1 >> 22; h2 *= m;
 	h1 ^= h2 >> 17; h1 *= m;
 	h2 ^= h1 >> 19; h2 *= m;
- 
+
 	uint64_t h = h1;
- 
+
 	h = (h << 32) | h2;
- 
+
 	return h;
 }
 
-int load_prefixes(char name[], Name_Prefix_P name_list[], int length[])
-{                                     //²ÎÊýÇ°×ºÎªlp_ 
+int load_prefixes(char name[], Name_Prefix_P name_list[], int length[], int number)
+{                                     //ï¿½ï¿½ï¿½ï¿½Ç°×ºÎªlp_
 	FILE *lp_in, *lp_out;
 	int lp_line;
 	char lp_temp[5000];
 	lp_in = fopen(name,"r");
 	length[0] = 0;
-	lp_line = 1;                      //³õÊ¼Îª1 
+	lp_line = 1;                      //ï¿½ï¿½Ê¼Îª1
 	while(feof(lp_in) == 0)
 	{
+		if(lp_line > number)//avoid reading the last line that is empty
+			break;
 		memset(lp_temp,0,5000*sizeof(char));
 		fgets(lp_temp, 5000, lp_in);
-		
-//		if(lp_temp[0]==0 || lp_temp[0]=='\n')//bug bug bug ¶ÁÈë¿ÕÐÐµ¼ÖÂ´íÎó£¬ÐèÒªÌø¹ý¡£¿ÕÐÐ³öÏÖÔ­ÒòÉÐ²»Çå³þ 
-//			continue; 
-			
+
+//		if(lp_temp[0]==0 || lp_temp[0]=='\n')//bug bug bug ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½Â´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð³ï¿½ï¿½ï¿½Ô­ï¿½ï¿½ï¿½Ð²ï¿½ï¿½ï¿½ï¿½ï¿½
+//			continue;
+
 		name_list[lp_line] = new Name_Prefix();
 // ************************************************************************
-// Ô¤´¦ÀíÃüÃûÇ°×º£¬´æ´¢ÍêÕûÃüÃûÐÅÏ¢£¬ÃüÃû×Ö¿éÊý£¬ÃüÃûÖ¸ÎÆ£¬ÃüÃûBFÖµ 
+// Ô¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°×ºï¿½ï¿½ï¿½æ´¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½Æ£ï¿½ï¿½ï¿½ï¿½ï¿½BFÖµ
 		sscanf(lp_temp, "%s", name_list[lp_line]->name);
 		name_list[lp_line]->component = count_component(name_list[lp_line]->name);
 		name_list[lp_line]->fp = murmurHash64B(name_list[lp_line]->name, strlen(name_list[lp_line]->name), 0xEE6B27EB);
 	//	calculate_Bloom_Filter(name_list[line]);
-// ************************************************************************	
+// ************************************************************************
 		length[name_list[lp_line]->component]++;
-		if(length[name_list[lp_line]->component] > length[0])                           //length[0]¼ÇÂ¼×î´óÖµ 
-			length[0] = length[name_list[lp_line]->component]; 
+		if(length[name_list[lp_line]->component] > length[0])                           //length[0]ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½Öµ
+			length[0] = length[name_list[lp_line]->component];
 		lp_line++;
 	}
 	fclose(lp_in);
-	
-// ************************************************************************	
-//Êä³ö¹ØÓÚ×Ö¿éÊýµÄÍ³¼Æ½á¹û	
+
+// ************************************************************************
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¿ï¿½ï¿½ï¿½ï¿½ï¿½Í³ï¿½Æ½ï¿½ï¿½ï¿½
 //	for(int lp_i = 1; lp_i <= PP_MAX_LENGTH; lp_i++)
 //		printf("The number of length %d name is %d\n", lp_i, length[lp_i]);
-// ************************************************************************			
-		
-	return lp_line - 1;              //³õÊ¼Îª1 
+// ************************************************************************
+	printf("loaded %d prefixs\n",lp_line);
+	return lp_line - 1;              //ï¿½ï¿½Ê¼Îª1
 }
 
-int process_middle_prefix(char input[], char output[])                   //¸ù¾ÝÃüÃûÇ°×º£¬ÔÚ¶þ·Ö²éÕÒµÄÖÐ¼ä½ÚµãÉú³É¶ÔÓ¦³¤¶ÈµÄÃüÃûÇ°×º 
-{									//²ÎÊýÇ°×ºÎªpm_ 
+int process_middle_prefix(char input[], char output[])                   //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°×ºï¿½ï¿½ï¿½Ú¶ï¿½ï¿½Ö²ï¿½ï¿½Òµï¿½ï¿½Ð¼ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½É¶ï¿½Ó¦ï¿½ï¿½ï¿½Èµï¿½ï¿½ï¿½ï¿½ï¿½Ç°×º 
+{									//ï¿½ï¿½ï¿½ï¿½Ç°×ºÎªpm_
 	FILE *pm_in, *pm_out;
 	char pm_read[500];
 	char pm_write[500];
 	char pm_temp[500];
 	int pm_low, pm_high, pm_middle, pm_length, pm_len;
+	int pm_pre_num=0;
 	pm_in = fopen(input, "r");
 	pm_out = fopen(output, "w");
-	
+
 	memset(pm_write,0,500*sizeof(char));
-	
+
 	while(feof(pm_in) == 0)
 	{
-		pm_low = 1; 
+		pm_low = 1;
 		pm_high = 32;
 		pm_len = 0;
-		fgets(pm_read, 500, pm_in);//ÕâÀïÐèÒªÈ¥µô¿Õ¸ñµÄ²Ù×÷£¬·ñÔòÃ¿Ò»¸ö¶ÁÈënameÔÙÉú³É±ê¼ÇÇ°×ººó£¬×îºóÒ»¸ö·ÅÈëpre.txtµÄÇ°×ºÄ©Î²»áÓÐÁ½¸ö\n\n£¬µ¼ÖÂºóÃæprefix load»áÔØÈëÒ»¸ö¿ÕÐÐ£¬½ø¶øÔÚ²éÑ¯µÄÊ±ºò»á¶Áµ½¿ÕÖ¸Õë£¨¿ÕÐÐ³¤¶ÈÎª0£¬»áÈ¥µ÷ÓÃht[0]£¬µ«ÊÇ´úÂëÖÐht[0]ÊÇÒç³öÍ°£¬Èç¹ûÃ»ÓÐ·¢ÉúÒç³ö£¬ÔòÒç³öÍ°ÊÇ¿ÕÖ¸Õë£¬»á³öÏÖ¶Î´íÎó£© 
-		pm_read[strlen(pm_read)-1]='\0';//È¥µô»»ÐÐ·û 
-		
-		pm_length = count_component(pm_read);//Í³¼Æµ±Ç°¶ÁÈëµÄname×Ö¿éÊý 
+		fgets(pm_read, 500, pm_in);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÈ¥ï¿½ï¿½ï¿½Õ¸ï¿½ï¿½Ä²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¿Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½nameï¿½ï¿½ï¿½ï¿½ï¿½É±ï¿½ï¿½ï¿½Ç°×ºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½pre.txtï¿½ï¿½Ç°×ºÄ©Î²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½\n\nï¿½ï¿½ï¿½ï¿½ï¿½Âºï¿½ï¿½ï¿½prefix loadï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½Ñ¯ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ë£¨ï¿½ï¿½ï¿½Ð³ï¿½ï¿½ï¿½Îª0ï¿½ï¿½ï¿½ï¿½È¥ï¿½ï¿½ï¿½ï¿½ht[0]ï¿½ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ï¿½ï¿½ï¿½ï¿½ht[0]ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½Ð·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½Ç¿ï¿½Ö¸ï¿½ë£¬ï¿½ï¿½ï¿½ï¿½ï¿½Ö¶Î´ï¿½ï¿½ï¿½ï¿½ï¿½
+		pm_read[strlen(pm_read)-1]='\0';//È¥ï¿½ï¿½ï¿½ï¿½ï¿½Ð·ï¿½
+
+		pm_length = count_component(pm_read);//Í³ï¿½Æµï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½nameï¿½Ö¿ï¿½ï¿½ï¿½
 	    while(pm_low <= pm_high)
 	    {
 	    	pm_middle = (pm_low + pm_high) / 2;
-	    	if(pm_length < pm_middle)//Èô×Ö¿éÊýÐ¡ÓÚµ±Ç°ÇøÓò(pm_low~pm_high)µÄÖÐÐÄÖµ,Ôò½«ÇøÓòÓÒ±ß½ç-1
-	    		pm_high = pm_middle - 1;//ÒÆÏò×ó×ÓÇø¼ä 
-	    	else//×Ö¿éÊý´óÓÚµÈÓÚµ±Ç°ÇøÓòÖÐÐÄÖµ 
+	    	if(pm_length < pm_middle)//ï¿½ï¿½ï¿½Ö¿ï¿½ï¿½ï¿½Ð¡ï¿½Úµï¿½Ç°ï¿½ï¿½ï¿½ï¿½(pm_low~pm_high)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò±ß½ï¿½-1
+	    		pm_high = pm_middle - 1;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	    	else//ï¿½Ö¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½Úµï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
 	    	{
 	    		pm_len = cut_string(pm_read, pm_middle);
-	    		memcpy(pm_write, pm_read, pm_len);//½ØÈ¡µ±Ç°nameÇ°pm_middle¸ö×Ö¿é 
-//	    		pm_write[pm_len] = '\0';//½ÓÉÏ½áÊø·û 
-	    		//if(pm_length != pm_middle)                    //²»µÈÓÚÖ»Êä³öÖÐ¼ä½Úµã£¬ÆÁ±Î¸Ã¾ä£¬ÔòµÃµ½Ô­ÓÐ½Úµã¼ÓÖÐ¼ä½Úµã 
-	    		if(pm_write[0]!='\n' || pm_write[0]!=0)
-	    			fprintf(pm_out, "%s\n", pm_write);//Êä³öµ½outputÖ¸ÏòµÄÎÄ¼þ 
+	    		memcpy(pm_write, pm_read, pm_len);//ï¿½ï¿½È¡ï¿½ï¿½Ç°nameÇ°pm_middleï¿½ï¿½ï¿½Ö¿ï¿½
+//	    		pm_write[pm_len] = '\0';//ï¿½ï¿½ï¿½Ï½ï¿½ï¿½ï¿½ï¿½ï¿½
+	    		//if(pm_length != pm_middle)                    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½Ð¼ï¿½ï¿½Úµã£¬ï¿½ï¿½ï¿½Î¸Ã¾ä£¬ï¿½ï¿½ï¿½Ãµï¿½Ô­ï¿½Ð½Úµï¿½ï¿½ï¿½ï¿½Ð¼ï¿½ï¿½Úµï¿½
+	    		if(pm_write[0]!='\n' || pm_write[0]!=0){
+	    			fprintf(pm_out, "%s\n", pm_write);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½outputÖ¸ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
+	    			pm_pre_num+=1;
+	    		}
 //	    		printf("insert:%s\n",pm_write);
 //	    		getchar();
 	    		memset(pm_write,0,500*sizeof(char));
-	    		pm_low = pm_middle + 1;//ÒÆÏòÓÒ×ÓÇø¼ä 
+	    		pm_low = pm_middle + 1;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			}
 		}
 	}
 	fclose(pm_in);
 	fclose(pm_out);
-	return 0;
+	return pm_pre_num;
 }
 
-int cut_string(char name[], int n)			//¼ÇÂ¼Ç°n¸ö×é¼þµÄ³¤¶È,nameÐÎÊ½Îª/a/b/c/d...
-{							//²ÎÊýÇ°×ºcs_ 
+int cut_string(char name[], int n)			//ï¿½ï¿½Â¼Ç°nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½,nameï¿½ï¿½Ê½Îª/a/b/c/d...
+{							//ï¿½ï¿½ï¿½ï¿½Ç°×ºcs_
 	char *cs_p;
 	cs_p = name;
 	int cs_number = 0;
@@ -164,7 +169,7 @@ int cut_string(char name[], int n)			//¼ÇÂ¼Ç°n¸ö×é¼þµÄ³¤¶È,nameÐÎÊ½Îª/a/b/c/d...
 	while(*cs_p != NULL)
 //	while(*cs_p)
 	{
-		if(*cs_p == 47)//·´Ð±¸Ü'/' 
+		if(*cs_p == 47)//ï¿½ï¿½Ð±ï¿½ï¿½'/'
 		{
 			if(cs_number < n)
 				cs_number++;
@@ -177,7 +182,7 @@ int cut_string(char name[], int n)			//¼ÇÂ¼Ç°n¸ö×é¼þµÄ³¤¶È,nameÐÎÊ½Îª/a/b/c/d...
 //			break;
 	}
 	return cs_length;
-} 
+}
 
 int clr_Name_Prefix(Name_Prefix_P item){
 	int i=0;
@@ -189,4 +194,4 @@ int clr_Name_Prefix(Name_Prefix_P item){
 		}
 		item->bloom[i]=0;
 	}
-} 
+}
