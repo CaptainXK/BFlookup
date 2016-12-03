@@ -107,7 +107,7 @@ int load_prefixes(char name[], Name_Prefix_P name_list[], int length[], int numb
 //	for(int lp_i = 1; lp_i <= PP_MAX_LENGTH; lp_i++)
 //		printf("The number of length %d name is %d\n", lp_i, length[lp_i]);
 // ************************************************************************
-	printf("loaded %d prefixs\n",lp_line);
+	printf("loaded %d prefixs\n",lp_line-1);
 	return lp_line - 1;              //��ʼΪ1
 }
 

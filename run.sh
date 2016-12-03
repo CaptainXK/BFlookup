@@ -5,7 +5,7 @@ then
 	echo "parameter number error!\n"
 	exit 1
 fi
-
+rm -rf test
 g++ *.c -o test -g3
 chmod 777 test
 ./test $1 $2

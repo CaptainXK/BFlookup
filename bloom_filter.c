@@ -7,7 +7,7 @@ int calculate_Bloom_Filter(Hash_Table_P ht[], Name_Prefix_P name_list)
 	//	bloom[i] = 0;
 	uint64_t cb_hash[HASH_TIME];
 	const uint32_t cb_seed[3] = {0x5F5E0F5, 0x3D14D13, 0x18EE243};
-	for(int cb_j = 0; cb_j < HASH_TIME; cb_j++)
+	for(int cb_j = 0; cb_j < HASH_TIME; cb_j++)//calculate bloom values for every prefix in name_list
 	{
 		cb_hash[cb_j] = murmurHash64B(name_list->name, strlen(name_list->name), cb_seed[cb_j]) % (32 * ht[name_list->component]->bf_number);
 		int cb_m = cb_hash[cb_j] / 32;
@@ -224,7 +224,7 @@ int lookup_Bloom_Filter(Hash_Table_P ht[], Name_Prefix_P name_list, int identity
 		}
 	}//while(low <= high)
 // ************************************************************************
-
+	
 	if(lb_back != 0)
 	{
 //		printf("Lookup the name %s succeed, it is in hash[%d]->buckets[%d]->entry[%d]!\n", name_list->name, table, bucket, entry);
