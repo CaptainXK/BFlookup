@@ -5,22 +5,28 @@
 #include "time.h"
 
 Name_Prefix_P name_list[240000];
+Name_Prefix_P mark_list[240000];
 int length[PP_MAX_NUMBER + 1] = {0};
+int mark_length[PP_MAX_NUMBER + 1] = {0};
+
 int main(int argc ,char *argv[])
 {
-	char name2[] = "pre.txt";
 	if(argc < 3){
 		printf("please input all data file needed\n");
 		exit(1);
 	}
 
 	char *name1 = argv[1];
-	// char *name2 = argv[2];
+	char name2[] = "marked_pre.txt";
+
 	Hash_Table_P ht[PP_MAX_LENGTH + 1];
 	int line=0;
-	line = process_middle_prefix(name1,name2);
-	printf("%d prefixes in total\n",line);
-	load_prefixes(name2, name_list, length, line);
+	int mark_line=0;
+	process_middle_prefix(name1,name2);
+	line = load_prefixes(name1, name_list, length);
+	printf("%d load real prefixes in total\n",line);
+	mark_line = load_prefixes(name2, mark_list, mark_length);
+	printf("%d marked prefixes before processing of duplicate removal in total\n",mark_line);
 
 	for(int i = 1; i <= PP_MAX_LENGTH; i++)
 	{
@@ -31,8 +37,8 @@ int main(int argc ,char *argv[])
 			ht[i] = NULL;
 	}
 
-	for(int i=1; i<=line; i++){
-		calculate_Bloom_Filter(ht, name_list[i]);
+	for(int i=1; i<= mark_line; i++){//calulate bloom values for mark_list
+		calculate_Bloom_Filter(ht, mark_list[i]);
 	}
 
 	Hash_Bucket_P *addition1 = new Hash_Bucket_P[line/10];
@@ -41,10 +47,18 @@ int main(int argc ,char *argv[])
 		for(int j = 0; j < line / 10; j++ )
 			identity1[i][j] = -1;
 
-	int tp = hash_table_insert(ht, name_list, line, addition1, identity1);
-	printf("%d\n",tp);
-	merge_Bloom_Filter(ht, name_list, line);
+	int tp = hash_table_insert(ht, name_list, line, addition1, identity1);//insert real prefixes into hash table
+	printf("%d times overflows\n",tp);
+	merge_Bloom_Filter(ht, mark_list, mark_line);//insert bf of every mark prefix into corresponding hash table
 	
+	//lookup with bf test
+	int res=0;
+	for(int i=1; i <= line; i++){
+		if(lookup_Bloom_Filter(ht, name_list[i], identity1) == -1)
+			res+=1;
+	}
+	printf("%d times lookup failed\n",res);
+
 	// //hash lookup test (without BF)
 	// FILE *test_in;
 	// test_in = fopen(argv[2],"r");

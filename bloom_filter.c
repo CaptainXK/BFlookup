@@ -60,6 +60,13 @@ int lookup_Bloom_Filter(Hash_Table_P ht[], Name_Prefix_P name_list, int identity
 	lb_back = 0;
 	uint64_t loc[HASH_TIME];
 
+	FILE *lb_out = fopen("result.txt","a+");
+
+	if(lb_out == NULL){
+		printf("res file open error!\n");
+		exit(1);
+	}
+
     while(lb_low <= lb_high)
     {
 		lb_middle = (lb_low + lb_high) / 2;
@@ -79,7 +86,6 @@ int lookup_Bloom_Filter(Hash_Table_P ht[], Name_Prefix_P name_list, int identity
 				lb_real--;
 			}
 		}
-
 		else
 		{
 			lb_flag = 0;
@@ -202,7 +208,6 @@ int lookup_Bloom_Filter(Hash_Table_P ht[], Name_Prefix_P name_list, int identity
 
 // ************************************************************************
 //			printf("flag = %d, bf = %d, real = %d\n", flag, bf, real);
-
 // ************************************************************************
 //BF����ϣ���ҽ���
 			if((lb_flag !=0) && (lb_length == lb_middle))
@@ -220,19 +225,19 @@ int lookup_Bloom_Filter(Hash_Table_P ht[], Name_Prefix_P name_list, int identity
 				lb_high = lb_right[lb_real];
 				lb_real--;
 			}
-
-		}
+		}//end else
 	}//while(low <= high)
-// ************************************************************************
 	
 	if(lb_back != 0)
 	{
-//		printf("Lookup the name %s succeed, it is in hash[%d]->buckets[%d]->entry[%d]!\n", name_list->name, table, bucket, entry);
+		fprintf(lb_out, "Lookup the name %s succeed, it is in hash[%d]->buckets[%d]->entry[%d]!\n", name_list->name, lb_table, lb_bucket, lb_entry);
+		fclose(lb_out);
 		return 1;
 	}
 	else
 	{
-//		printf("Lookup the name %s failed!\n", name_list->name);
+		fprintf(lb_out, "Lookup the name %s failed!\n", name_list->name);
+		fclose(lb_out);
 		return -1;
 	}
 }

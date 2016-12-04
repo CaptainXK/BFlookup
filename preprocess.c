@@ -69,23 +69,20 @@ uint64_t murmurHash64B (const void * key, int len, uint32_t seed)             //
 	return h;
 }
 
-int load_prefixes(char name[], Name_Prefix_P name_list[], int length[], int number)
+int load_prefixes(char name[], Name_Prefix_P name_list[], int length[])
 {                                     //����ǰ׺Ϊlp_
 	FILE *lp_in, *lp_out;
-	int lp_line;
+	int lp_line=1;
 	char lp_temp[5000];
 	lp_in = fopen(name,"r");
-	length[0] = 0;
-	lp_line = 1;                      //��ʼΪ1
+	length[0] = 0;                    //��ʼΪ1
 	while(feof(lp_in) == 0)
 	{
-		if(lp_line > number)//avoid reading the last line that is empty
-			break;
 		memset(lp_temp,0,5000*sizeof(char));
 		fgets(lp_temp, 5000, lp_in);
-
-//		if(lp_temp[0]==0 || lp_temp[0]=='\n')//bug bug bug �������е��´�������Ҫ���������г���ԭ���в�����
-//			continue;
+		lp_temp[strlen(lp_temp)-1]='\0';
+		if(strlen(lp_temp) == 0)//avoid loading the last line that is empty
+			break;
 
 		name_list[lp_line] = new Name_Prefix();
 // ************************************************************************
@@ -107,7 +104,7 @@ int load_prefixes(char name[], Name_Prefix_P name_list[], int length[], int numb
 //	for(int lp_i = 1; lp_i <= PP_MAX_LENGTH; lp_i++)
 //		printf("The number of length %d name is %d\n", lp_i, length[lp_i]);
 // ************************************************************************
-	printf("loaded %d prefixs\n",lp_line-1);
+	// printf("loaded %d prefixs\n",lp_line-1);
 	return lp_line - 1;              //��ʼΪ1
 }
 
@@ -142,11 +139,12 @@ int process_middle_prefix(char input[], char output[])                   //��
 	    	{
 	    		pm_len = cut_string(pm_read, pm_middle);
 	    		memcpy(pm_write, pm_read, pm_len);//��ȡ��ǰnameǰpm_middle���ֿ�
-//	    		pm_write[pm_len] = '\0';//���Ͻ�����
 	    		//if(pm_length != pm_middle)                    //������ֻ�����м��ڵ㣬���θþ䣬���õ�ԭ�нڵ����м��ڵ�
-	    		if(pm_write[0]!='\n' || pm_write[0]!=0){
-	    			fprintf(pm_out, "%s\n", pm_write);//������outputָ�����ļ�
-	    			pm_pre_num+=1;
+	    		if( pm_write[0]!='\n' || pm_write[0]!=0 ){
+	    			if(pm_len < strlen(pm_read)){
+	    				fprintf(pm_out,"%s\n",pm_write);
+	    				pm_pre_num+=1;
+	    			}
 	    		}
 //	    		printf("insert:%s\n",pm_write);
 //	    		getchar();
@@ -154,6 +152,7 @@ int process_middle_prefix(char input[], char output[])                   //��
 	    		pm_low = pm_middle + 1;//������������
 			}
 		}
+		memset(pm_read, 0, 500*sizeof(char));
 	}
 	fclose(pm_in);
 	fclose(pm_out);
