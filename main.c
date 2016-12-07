@@ -58,7 +58,9 @@ int main(int argc ,char *argv[])
 			res+=1;
 	}
 	printf("%d times lookup failed\n",res);
-
+	//end lookup test with BF
+	
+	
 	// //hash lookup test (without BF)
 	// FILE *test_in;
 	// test_in = fopen(argv[2],"r");
@@ -77,8 +79,8 @@ int main(int argc ,char *argv[])
 	// 	hash_table_lookup(ht, test_name, identity1);
 	// 	clr_Name_Prefix(test_name);
 	// }
-
 	// fclose(test_in);
-
+	// end lookup test without BF
+	
 	return 0;
 }

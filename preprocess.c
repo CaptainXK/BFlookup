@@ -76,6 +76,11 @@ int load_prefixes(char name[], Name_Prefix_P name_list[], int length[])
 	char lp_temp[5000];
 	lp_in = fopen(name,"r");
 	length[0] = 0;                    //��ʼΪ1
+	if(lp_in == NULL){
+		printf("read file open error!\n");
+		exit(1);
+	}
+
 	while(feof(lp_in) == 0)
 	{
 		memset(lp_temp,0,5000*sizeof(char));
@@ -99,13 +104,7 @@ int load_prefixes(char name[], Name_Prefix_P name_list[], int length[])
 	}
 	fclose(lp_in);
 
-// ************************************************************************
-//���������ֿ�����ͳ�ƽ���
-//	for(int lp_i = 1; lp_i <= PP_MAX_LENGTH; lp_i++)
-//		printf("The number of length %d name is %d\n", lp_i, length[lp_i]);
-// ************************************************************************
-	// printf("loaded %d prefixs\n",lp_line-1);
-	return lp_line - 1;              //��ʼΪ1
+	return lp_line - 1;              
 }
 
 int process_middle_prefix(char input[], char output[])                   //��������ǰ׺���ڶ��ֲ��ҵ��м��ڵ����ɶ�Ӧ���ȵ�����ǰ׺ 
@@ -118,6 +117,11 @@ int process_middle_prefix(char input[], char output[])                   //��
 	int pm_pre_num=0;
 	pm_in = fopen(input, "r");
 	pm_out = fopen(output, "w");
+
+	if(pm_in==NULL || pm_out==NULL){
+		printf("in or out file open error!\n");
+		exit(1);
+	}
 
 	memset(pm_write,0,500*sizeof(char));
 
@@ -146,8 +150,7 @@ int process_middle_prefix(char input[], char output[])                   //��
 	    				pm_pre_num+=1;
 	    			}
 	    		}
-//	    		printf("insert:%s\n",pm_write);
-//	    		getchar();
+
 	    		memset(pm_write,0,500*sizeof(char));
 	    		pm_low = pm_middle + 1;//������������
 			}
@@ -183,7 +186,8 @@ int cut_string(char name[], int n)			//��¼ǰn�������ĳ���
 	return cs_length;
 }
 
-int clr_Name_Prefix(Name_Prefix_P item){
+int clr_Name_Prefix(Name_Prefix_P item)
+{
 	int i=0;
 	item->component=0;
 	item->fp=0;
